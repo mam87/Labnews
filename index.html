@@ -3,176 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مختبر نيوز | مامون السعودي</title>
+    <title>مختبر نيوز | مأمون السعودي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #1a5276;
-            --secondary: #3498db;
-            --bg: #f4f7f9;
-        }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .status-bar {
-            background: white;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.9rem;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        .news-card {
-            background: white;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            border-right: 5px solid var(--secondary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .news-card h2 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--primary);
-        }
-
-        .meta {
-            font-size: 0.8rem;
-            color: #777;
-            margin-bottom: 10px;
-        }
-
-        .read-more {
-            display: inline-block;
-            margin-top: 10px;
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 40px;
-        }
-
-        .whatsapp-btn {
-            background: #25d366;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .loader { text-align: center; padding: 50px; }
+        :root { --primary: #1a5276; --secondary: #3498db; --bg: #f4f7f9; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 30px 20px; text-align: center; }
+        .status-bar { background: white; padding: 10px; text-align: center; font-size: 0.9rem; border-bottom: 2px solid #ddd; }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        .news-card { background: white; margin-bottom: 20px; padding: 20px; border-radius: 10px; border-right: 5px solid var(--secondary); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .news-card h2 { margin-top: 0; font-size: 1.2rem; color: var(--primary); line-height: 1.5; }
+        .meta { font-size: 0.8rem; color: #777; margin-bottom: 10px; }
+        .read-more { display: inline-block; margin-top: 10px; color: white; background: var(--secondary); padding: 5px 15px; border-radius: 5px; text-decoration: none; font-size: 0.9rem; }
+        footer { background: #222; color: white; text-align: center; padding: 30px; margin-top: 40px; }
+        .whatsapp-btn { background: #25d366; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; display: inline-block; margin-top: 10px; font-weight: bold; }
+        .loader { text-align: center; padding: 50px; color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>مختبر نيوز 🔬</h1>
-    <p>بوابة العلوم الطبية المخبرية المحدثة</p>
+    <p>أحدث أخبار الطب والعلوم المخبرية</p>
 </header>
 
 <div class="status-bar">
-    📅 اليوم: <span id="today-date"></span> | التحديث: <span style="color:green">تلقائي كل 24 ساعة</span>
+    📅 تاريخ اليوم: <span id="today-date"></span>
 </div>
 
 <div class="container" id="news-container">
-    <div class="loader">جاري سحب أحدث التقارير الطبية...</div>
+    <div class="loader" id="loader">جاري سحب الأخبار من المصادر الطبية...</div>
 </div>
 
 <footer>
-    <p>حقوق التصميم محفوظة &copy; 2026</p>
+    <p>تم التصميم بواسطة</p>
     <h3 style="margin: 5px 0;">المصمم: مامون السعودي</h3>
     <a href="https://wa.me/962799146795" class="whatsapp-btn" target="_blank">تواصل عبر واتساب 📲</a>
 </footer>
 
 <script>
-    // 1. عرض التاريخ الحالي
     document.getElementById('today-date').innerText = new Date().toLocaleDateString('ar-EG', {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
+    // استخدام مفتاحك وتوسيع نطاق البحث لضمان النتائج
     const apiKey = 'Cbd72e5dff6a490992215cee1860f167';
+    // البحث عن أخبار "صحة" و "علوم" و "مختبرات" لضمان ظهور بيانات
+    const url = `https://newsapi.org/v2/everything?q=(مختبر+OR+طب+OR+صحة+OR+science)&language=ar&sortBy=publishedAt&apiKey=${apiKey}`;
 
-    // وظيفية جلب الأخبار بنطاق واسع لضمان وجود محتوى
-    async function loadAllNews() {
+    async function fetchNews() {
         const container = document.getElementById('news-container');
-        
-        // سنحاول جلب أخبار الصحة باللغة العربية أولاً
-        const arabicUrl = `https://newsapi.org/v2/top-headlines?category=health&language=ar&apiKey=${apiKey}`;
-        // وأخبار المختبرات بالإنجليزية كبديل قوي
-        const englishUrl = `https://newsapi.org/v2/everything?q="medical laboratory"&language=en&sortBy=publishedAt&apiKey=${apiKey}`;
-
         try {
-            // البدء بجلب الأخبار العربية
-            let response = await fetch(arabicUrl);
-            let data = await response.json();
-            let articles = data.articles || [];
+            const response = await fetch(url);
+            const data = await response.json();
 
-            // إذا لم نجد أخباراً عربية كافية، ندمج معها الأخبار العالمية
-            if (articles.length < 3) {
-                let resEn = await fetch(englishUrl);
-                let dataEn = await resEn.json();
-                articles = articles.concat(dataEn.articles || []);
-            }
-
-            if (articles.length > 0) {
-                container.innerHTML = '';
-                articles.slice(0, 15).forEach(article => {
+            if (data.status === "ok" && data.articles.length > 0) {
+                container.innerHTML = ''; // مسح اللودر
+                data.articles.slice(0, 15).forEach(article => {
                     if (article.title && article.title !== '[Removed]') {
-                        const isAr = /[\u0600-\u06FF]/.test(article.title); // فحص هل الخبر عربي
                         container.innerHTML += `
-                            <div class="news-card" style="direction: ${isAr ? 'rtl' : 'ltr'}; text-align: ${isAr ? 'right' : 'left'}">
+                            <div class="news-card">
                                 <div class="meta">
                                     <span>المصدر: ${article.source.name}</span> | 
                                     <span>${new Date(article.publishedAt).toLocaleDateString('ar-EG')}</span>
                                 </div>
                                 <h2>${article.title}</h2>
-                                <p>${article.description || 'اضغط لمتابعة التفاصيل..'}</p>
-                                <a href="${article.url}" target="_blank" class="read-more">
-                                    ${isAr ? 'اقرأ المزيد ←' : 'Read More →'}
-                                </a>
+                                <p>${article.description || 'لا يوجد وصف مختصر للخبر، اضغط على الزر للمتابعة.'}</p>
+                                <a href="${article.url}" target="_blank" class="read-more">التفاصيل الكاملة ←</a>
                             </div>
                         `;
                     }
                 });
             } else {
-                container.innerHTML = '<p style="text-align:center">لا يوجد أخبار حالياً، تأكد من اتصال الإنترنت.</p>';
+                container.innerHTML = `
+                    <div class="news-card">
+                        <h2>تنبيه للمصمم مأمون</h2>
+                        <p>يبدو أن خدمة الأخبار (NewsAPI) ترفض الطلب حالياً بسبب قيود "حماية المتصفح" أو انتهاء الحصة اليومية للمفتاح.</p>
+                        <p><strong>نصيحة:</strong> قم برفع الكود على <b>GitHub</b> أولاً، فغالباً لا تعمل الأخبار على الكمبيوتر الشخصي وتعمل فوراً عند رفعها على رابط حقيقي.</p>
+                    </div>`;
             }
         } catch (error) {
-            container.innerHTML = '<p style="text-align:center">خطأ في الاتصال بالخادم.</p>';
+            container.innerHTML = '<p style="text-align:center">عذراً، حدث خطأ في الاتصال بالخادم.</p>';
         }
     }
 
-    loadAllNews();
+    fetchNews();
 </script>
 
 </body>
 </html>
-
