@@ -3,31 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مختبر نيوز | المصمم مأمون السعودي</title>
+    <title>مختبر نيوز | مأمون السعودي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #1a5276; --secondary: #3498db; --bg: #f0f2f5; }
+        :root { --primary: #1a5276; --secondary: #3498db; --bg: #f4f7f9; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
-        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px; text-align: center; }
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-        .news-card { background: white; margin-bottom: 15px; padding: 20px; border-radius: 12px; border-right: 5px solid var(--secondary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .news-card h2 { margin: 0 0 10px 0; font-size: 1.2rem; color: var(--primary); }
-        .meta { font-size: 0.8rem; color: #888; margin-bottom: 10px; display: block; }
-        .read-more { display: inline-block; margin-top: 10px; color: var(--secondary); text-decoration: none; font-weight: bold; }
+        .news-card { background: white; margin-bottom: 20px; padding: 20px; border-radius: 12px; border-right: 6px solid var(--secondary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .news-card h2 { margin: 0 0 10px 0; font-size: 1.25rem; color: var(--primary); }
+        .read-more { display: inline-block; margin-top: 10px; color: white; background: var(--secondary); padding: 7px 15px; border-radius: 5px; text-decoration: none; font-size: 0.9rem; }
         footer { background: #1a1a1a; color: white; text-align: center; padding: 30px; margin-top: 50px; }
-        .whatsapp-btn { background: #25d366; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; display: inline-block; margin-top: 10px; }
-        .loader { text-align: center; padding: 50px; color: var(--primary); }
+        .whatsapp-btn { background: #25d366; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; display: inline-block; margin-top: 10px; font-weight: bold; }
+        #news-container img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>مختبر نيوز 🔬</h1>
-    <p>بوابة مأمون السعودي لأحدث أخبار الطب والعلوم</p>
+    <p>بوابة مأمون السعودي لأخبار المختبرات والطب</p>
 </header>
 
 <div class="container" id="news-container">
-    <div class="loader">جاري جلب أحدث الأخبار الطبية...</div>
+    <div style="text-align: center; padding: 50px;">جاري سحب الأخبار من المصادر الطبية الموثوقة...</div>
 </div>
 
 <footer>
@@ -37,60 +36,39 @@
 </footer>
 
 <script>
-    const apiKey = 'Cbd72e5dff6a490992215cee1860f167';
+    // سنستخدم خدمة RSS مجانية تجلب الأخبار من الجزيرة (قسم الطب) أو مواقع طبية متخصصة
+    const rss_url = 'https://www.aljazeera.net/rss/health'; // مصدر أخبار طبية قوية
     
-    // التغيير الجوهري هنا: نستخدم Top Headlines في قسم الصحة لضمان وجود أخبار دائماً
-    const url = `https://newsapi.org/v2/top-headlines?country=eg&category=health&apiKey=${apiKey}`;
-    // ملاحظة: استخدمنا 'eg' (مصر) أو يمكنك استخدام 'ae' أو 'sa' لجلب أخبار عربية مضمونة
+    // محرك لجلب وتحويل الـ RSS إلى JSON ليعرض في موقعك
+    const api_url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss_url)}`;
 
-    async function fetchNews() {
+    async function loadNews() {
         const container = document.getElementById('news-container');
         try {
-            // سنحاول جلب أخبار الصحة العامة لضمان عدم بقاء الصفحة فارغة
-            const response = await fetch(url);
+            const response = await fetch(api_url);
             const data = await response.json();
 
-            if (data.articles && data.articles.length > 0) {
+            if (data.status === 'ok') {
                 container.innerHTML = '';
-                data.articles.forEach(article => {
-                    if (article.title && article.title !== '[Removed]') {
-                        container.innerHTML += `
-                            <div class="news-card">
-                                <span class="meta">المصدر: ${article.source.name} | ${new Date(article.publishedAt).toLocaleDateString('ar-EG')}</span>
-                                <h2>${article.title}</h2>
-                                <p>${article.description || 'اضغط على الرابط في الأسفل لمتابعة كامل تفاصيل هذا الخبر الطبي.'}</p>
-                                <a href="${article.url}" target="_blank" class="read-more">تفاصيل الخبر ←</a>
-                            </div>
-                        `;
-                    }
+                data.items.forEach(item => {
+                    container.innerHTML += `
+                        <div class="news-card">
+                            <small style="color:#888">${new Date(item.pubDate).toLocaleDateString('ar-EG')}</small>
+                            <h2>${item.title}</h2>
+                            <p>${item.description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
+                            <a href="${item.link}" target="_blank" class="read-more">قراءة التفاصيل الكاملة ←</a>
+                        </div>
+                    `;
                 });
             } else {
-                // حل أخير في حال فشلت الأخبار العربية: جلب أخبار عالمية عن المختبرات
-                fetchGlobalLabNews();
+                container.innerHTML = '<p style="text-align:center">عذراً، تعذر جلب الأخبار حالياً.</p>';
             }
         } catch (error) {
-            container.innerHTML = '<p style="text-align:center">يرجى رفع الملف على GitHub ليعمل جلب الأخبار بشكل سليم.</p>';
+            container.innerHTML = '<p style="text-align:center">حدث خطأ في الاتصال بالمصدر.</p>';
         }
     }
 
-    async function fetchGlobalLabNews() {
-        const globalUrl = `https://newsapi.org/v2/everything?q=laboratory+science&language=en&pageSize=10&apiKey=${apiKey}`;
-        const res = await fetch(globalUrl);
-        const data = await res.json();
-        const container = document.getElementById('news-container');
-        container.innerHTML = '<h3 style="text-align:center">أخبار المختبرات العالمية (مترجمة):</h3>';
-        
-        data.articles.forEach(article => {
-            container.innerHTML += `
-                <div class="news-card" style="direction: ltr; text-align: left;">
-                    <h2>${article.title}</h2>
-                    <a href="${article.url}" target="_blank" class="read-more">Read More →</a>
-                </div>
-            `;
-        });
-    }
-
-    fetchNews();
+    loadNews();
 </script>
 
 </body>
