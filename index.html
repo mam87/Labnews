@@ -16,6 +16,7 @@
         footer { background: #1a1a1a; color: white; text-align: center; padding: 30px; margin-top: 50px; }
         .whatsapp-btn { background: #25d366; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; display: inline-block; margin-top: 10px; font-weight: bold; }
         #news-container img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
+        .fallback-note { background: #fef9e7; border-right: 6px solid #f39c12; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -26,7 +27,7 @@
 </header>
 
 <div class="container" id="news-container">
-    <div style="text-align: center; padding: 50px;">جاري سحب الأخبار من المصادر الطبية الموثوقة...</div>
+    <div style="text-align: center; padding: 50px;">جاري تحميل الأخبار من المصادر الطبية الموثوقة...</div>
 </div>
 
 <footer>
@@ -36,35 +37,74 @@
 </footer>
 
 <script>
-    // سنستخدم خدمة RSS مجانية تجلب الأخبار من الجزيرة (قسم الطب) أو مواقع طبية متخصصة
-    const rss_url = 'https://www.aljazeera.net/rss/health'; // مصدر أخبار طبية قوية
-    
-    // محرك لجلب وتحويل الـ RSS إلى JSON ليعرض في موقعك
-    const api_url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss_url)}`;
+    // مصدر RSS لقسم الصحة في الجزيرة
+    const rssUrl = 'https://www.aljazeera.net/rss/health';
+
+    // وسيط (proxy) مجاني يدعم CORS ويحول الـ RSS إلى نص XML
+    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(rssUrl);
 
     async function loadNews() {
         const container = document.getElementById('news-container');
         try {
-            const response = await fetch(api_url);
-            const data = await response.json();
+            const response = await fetch(proxyUrl);
+            if (!response.ok) throw new Error('فشل الاتصال بالوكيل');
 
-            if (data.status === 'ok') {
-                container.innerHTML = '';
-                data.items.forEach(item => {
-                    container.innerHTML += `
-                        <div class="news-card">
-                            <small style="color:#888">${new Date(item.pubDate).toLocaleDateString('ar-EG')}</small>
-                            <h2>${item.title}</h2>
-                            <p>${item.description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
-                            <a href="${item.link}" target="_blank" class="read-more">قراءة التفاصيل الكاملة ←</a>
-                        </div>
-                    `;
-                });
-            } else {
-                container.innerHTML = '<p style="text-align:center">عذراً، تعذر جلب الأخبار حالياً.</p>';
-            }
+            const xmlText = await response.text(); // نحصل على محتوى XML
+
+            // تحويل النص إلى كائن XML يمكن قراءته
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+            // استخراج العناصر (items) من الـ RSS
+            const items = xmlDoc.querySelectorAll('item');
+            if (items.length === 0) throw new Error('لا توجد أخبار في هذا المصدر');
+
+            container.innerHTML = ''; // تفريغ رسالة التحميل
+
+            items.forEach(item => {
+                // الحصول على البيانات من كل عنصر
+                const title = item.querySelector('title')?.textContent || 'بدون عنوان';
+                const link = item.querySelector('link')?.textContent || '#';
+                const description = item.querySelector('description')?.textContent || '';
+                const pubDate = item.querySelector('pubDate')?.textContent || new Date();
+
+                // تنظيف الوصف من وسوم HTML واختصاره
+                const cleanDesc = description.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+
+                // تنسيق التاريخ
+                const dateObj = new Date(pubDate);
+                const dateStr = dateObj.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                // إنشاء بطاقة الخبر
+                container.innerHTML += `
+                    <div class="news-card">
+                        <small style="color:#888">${dateStr}</small>
+                        <h2>${title}</h2>
+                        <p>${cleanDesc}</p>
+                        <a href="${link}" target="_blank" class="read-more">قراءة التفاصيل الكاملة ←</a>
+                    </div>
+                `;
+            });
         } catch (error) {
-            container.innerHTML = '<p style="text-align:center">حدث خطأ في الاتصال بالمصدر.</p>';
+            console.error(error);
+            // في حالة الفشل نعرض أخباراً تجريبية ثابتة (افتراضية) حتى لا تكون الصفحة فارغة
+            container.innerHTML = `
+                <div class="fallback-note">
+                    <strong>⚠️ تعذر جلب الأخبار الحية حالياً.</strong> إليك بعض الأخبار النموذجية:
+                </div>
+                <div class="news-card">
+                    <small style="color:#888">٢٠ فبراير ٢٠٢٦</small>
+                    <h2>اكتشاف جديد في علاج السرطان باستخدام تقنية كريسبر</h2>
+                    <p>أعلن فريق من الباحثين عن نجاح تجربة سريرية لاستخدام تقنية تعديل الجينات كريسبر في علاج نوع عدواني من السرطان، مما يفتح الباب أمام آمال جديدة...</p>
+                    <a href="#" class="read-more" onclick="return false;">قراءة التفاصيل الكاملة ←</a>
+                </div>
+                <div class="news-card">
+                    <small style="color:#888">١٩ فبراير ٢٠٢٦</small>
+                    <h2>تطوير جهاز محمول للكشف المبكر عن أمراض القلب</h2>
+                    <p>ابتكر علماء في جامعة عمان الأهلية جهازاً صغيراً يمكنه تحليل وظائف القلب بدقة عالية وإرسال النتائج مباشرة إلى الطبيب المعالج...</p>
+                    <a href="#" class="read-more" onclick="return false;">قراءة التفاصيل الكاملة ←</a>
+                </div>
+            `;
         }
     }
 
