@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مختبر نيوز | بوابة العلوم الطبية المخبرية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #3498db;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .status-bar {
+            background: #fff;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .news-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border-right: 6px solid var(--secondary-color);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .news-card:hover { transform: translateY(-5px); }
+
+        .meta {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>مختبر نيوز 🔬</h1>
+    <p>تغطية شاملة لأحدث تقنيات المختبرات والعلوم الطبية</p>
+</header>
+
+<div class="status-bar">
+    تاريخ اليوم: <span id="today-date"></span> | التحديث: <span style="color:green">مباشر ومستمر</span>
+</div>
+
+<div class="container" id="news-container">
+    <div style="text-align:center; padding:50px;">جاري جلب آخر أخبار المختبرات...</div>
+</div>
+
+<footer>
+    <p>تم التصميم والتطوير بواسطة</p>
+    <h3>المصمم: مامون السعودي</h3>
+    <a href="https://wa.me/962799146795" class="whatsapp-btn" target="_blank">واتساب: +962799146795</a>
+    <p style="font-size: 0.7rem; margin-top: 20px; opacity: 0.5;">&copy; 2026 جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+    // تحديث التاريخ
+    document.getElementById('today-date').innerText = new Date().toLocaleDateString('ar-EG', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    // جلب الأخبار باستخدام مفتاحك الخاص
+    const apiKey = 'Cbd72e5dff6a490992215cee1860f167'; 
+    // البحث عن مواضيع المختبرات الطبية
+    const url = `https://newsapi.org/v2/everything?q=medical+laboratory+OR+pathology+OR+hematology&language=ar&sortBy=publishedAt&apiKey=${apiKey}`;
+
+    async function fetchNews() {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const container = document.getElementById('news-container');
+            
+            if (data.articles && data.articles.length > 0) {
+                container.innerHTML = '';
+                data.articles.slice(0, 12).forEach(article => {
+                    container.innerHTML += `
+                        <div class="news-card">
+                            <div class="meta">
+                                <span>المصدر: ${article.source.name}</span>
+                                <span>${new Date(article.publishedAt).toLocaleDateString('ar-EG')}</span>
+                            </div>
+                            <h2>${article.title}</h2>
+                            <p>${article.description || 'لا يوجد وصف مختصر، يمكنك قراءة الخبر كاملاً من المصدر.'}</p>
+                            <a href="${article.url}" target="_blank" class="read-more">اقرأ الخبر كاملاً ←</a>
+                        </div>
+                    `;
+                });
+            } else {
+                container.innerHTML = '<p style="text-align:center">لا توجد أخبار جديدة حالياً، يرجى المحاولة لاحقاً.</p>';
+            }
+        } catch (error) {
+            document.getElementById('news-container').innerHTML = '<p style="text-align:center">عذراً، حدث خطأ في جلب البيانات.</p>';
+        }
+    }
+
+    fetchNews();
+</script>
+
+</body>
+</html>
+
