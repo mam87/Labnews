@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Medical Laboratory News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --serif:'Playfair Display',Georgia,serif;
+            --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+            --mono:'JetBrains Mono','Courier New',monospace;
+            --arabic:'Noto Naskh Arabic',serif;
+            --lab-50:#f0f7ff;--lab-100:#e0efff;--lab-200:#b9dfff;--lab-300:#7cc4ff;
+            --lab-400:#36a5ff;--lab-500:#0c85f1;--lab-600:#0068ce;--lab-700:#0053a7;
+            --lab-800:#05478a;--lab-900:#0a3c72;--lab-950:#07264b;
+            --white:#f8fafb;--light:#eef2f6;--border:#dce3eb;
+            --muted:#8b97a7;--text:#374151;--dark:#111827;
+            --accent-green:#059669;--accent-amber:#d97706;--accent-violet:#7c3aed;
+            --radius:12px;
+        }
+        body{font-family:var(--sans);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+        html[dir="rtl"] body{font-family:var(--arabic);direction:rtl}
+        html[dir="rtl"] .font-sans{font-family:var(--arabic)}
+
+        /* ===== MODERN BACKGROUND ===== */
+        body{
+            background:#f0f4f8;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(12,133,241,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(5,150,105,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 10% 60%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            background-attachment:fixed;
+        }
+        /* Floating orbs */
+        body::before,body::after{
+            content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+            filter:blur(80px);opacity:.5;
+        }
+        body::before{
+            width:500px;height:500px;top:-150px;right:-100px;
+            background:radial-gradient(circle,rgba(12,133,241,0.12),transparent 70%);
+            animation:floatOrb 20s ease-in-out infinite;
+        }
+        body::after{
+            width:400px;height:400px;bottom:-100px;left:-80px;
+            background:radial-gradient(circle,rgba(5,150,105,0.1),transparent 70%);
+            animation:floatOrb 25s ease-in-out infinite reverse;
+        }
+        @keyframes floatOrb{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+
+        .page-wrap{position:relative;z-index:1}
+
+        a{text-decoration:none;color:inherit}
+        button{cursor:pointer;border:none;background:none;font-family:inherit}
+        input{font-family:inherit}
+
+        .container{max-width:1200px;margin:0 auto;padding:0 16px}
+        @media(min-width:640px){.container{padding:0 24px}}
+        @media(min-width:1024px){.container{padding:0 32px}}
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes slideRight{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
+        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+        .anim-fade-up{animation:fadeUp .6s ease-out both}
+        .anim-fade-in{animation:fadeIn .5s ease-out both}
+        .anim-slide-right{animation:slideRight .5s ease-out both}
+        .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}
+        .d4{animation-delay:.4s}.d5{animation-delay:.5s}
+
+        /* ===== GLASS CARD ===== */
+        .glass{background:rgba(255,255,255,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.6);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+
+        /* ===== ACCENT BAR ===== */
+        .accent-bar{height:3px;background:linear-gradient(90deg,var(--lab-500),var(--accent-green),var(--accent-violet))}
+
+        /* ===== TICKER ===== */
+        .ticker-wrap{background:var(--lab-950);color:#fff;padding:8px 0;overflow:hidden}
+        .ticker-inner{display:flex;align-items:center}
+        .ticker-label{flex-shrink:0;padding:0 16px;display:flex;align-items:center;gap:8px;border-right:1px solid var(--lab-800)}
+        .ticker-label .dot{width:8px;height:8px;background:#ef4444;border-radius:50%;animation:pulseDot 1.5s ease-in-out infinite}
+        .ticker-label span{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--lab-300)}
+        .ticker-track-wrap{overflow:hidden;flex:1}
+        .ticker-track{display:flex;white-space:nowrap;animation:ticker 50s linear infinite}
+        .ticker-track:hover{animation-play-state:paused}
+        .ticker-item{padding:0 32px;font-size:13px;color:var(--lab-200)}
+        .ticker-item i{margin-right:8px;color:var(--lab-400)}
+        html[dir="rtl"] .ticker-item i{margin-right:0;margin-left:8px}
+        html[dir="rtl"] .ticker-label{border-right:none;border-left:1px solid var(--lab-800)}
+
+        /* ===== HEADER ===== */
+        .header{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40}
+        .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+        @media(min-width:1024px){.header-inner{padding:20px 0}}
+        .header-brand{display:flex;align-items:center;gap:14px}
+        .header-logo{width:46px;height:46px;background:linear-gradient(135deg,var(--lab-500),var(--lab-700));border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(12,133,241,.25)}
+        .header-logo i{color:#fff;font-size:18px}
+        .header-title{font-family:var(--serif);font-size:20px;color:var(--dark);line-height:1.2;font-weight:600}
+        @media(min-width:640px){.header-title{font-size:26px}}
+        @media(min-width:1024px){.header-title{font-size:30px}}
+        html[dir="rtl"] .header-title{font-family:var(--arabic);font-size:22px}
+        @media(min-width:640px){html[dir="rtl"] .header-title{font-size:26px}}
+        .header-subtitle{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+        @media(min-width:640px){.header-subtitle{font-size:12px}}
+        .header-right{display:none;align-items:center;gap:24px}
+        @media(min-width:1024px){.header-right{display:flex}}
+        .header-nav{display:flex;gap:20px}
+        .header-nav a{font-size:13px;font-weight:500;color:var(--text);position:relative;transition:color .2s;padding:4px 0}
+        .header-nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--lab-500);transition:width .3s;border-radius:1px}
+        .header-nav a:hover{color:var(--lab-600)}
+        .header-nav a:hover::after{width:100%}
+        html[dir="rtl"] .header-nav a::after{left:auto;right:0}
+
+        /* LANG TOGGLE */
+        .lang-toggle{display:flex;align-items:center;background:var(--light);border-radius:8px;padding:3px;gap:2px;border:1px solid var(--border)}
+        .lang-btn{padding:5px 12px;font-size:11px;font-weight:600;border-radius:6px;transition:all .2s;color:var(--muted)}
+        .lang-btn.active{background:#fff;color:var(--lab-600);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+        .lang-btn:hover:not(.active){color:var(--text)}
+
+        .header-date{padding-left:20px;border-left:1px solid var(--border);text-align:right}
+        html[dir="rtl"] .header-date{padding-left:0;padding-right:20px;border-left:none;border-right:1px solid var(--border);text-align:left}
+        .header-date-main{font-size:13px;font-weight:500;color:var(--dark)}
+        .header-date-time{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:1px}
+
+        .mobile-menu-btn{display:flex;align-items:center;gap:8px;padding:8px;color:var(--muted);font-size:18px}
+        @media(min-width:1024px){.mobile-menu-btn{display:none}}
+        .mobile-menu{display:none;padding-bottom:16px}
+        .mobile-menu.show{display:block}
+        .mobile-menu nav{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--border);padding-top:14px}
+        .mobile-menu nav a{font-size:14px;font-weight:500;color:var(--text);padding:6px 0;display:flex;align-items:center;gap:10px}
+        .mobile-menu nav a i{width:20px;text-align:center;color:var(--muted);font-size:14px}
+        .mobile-controls{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+        .mobile-date{font-family:var(--mono);font-size:11px;color:var(--muted)}
+        @media(min-width:1024px){.mobile-menu{display:none!important}}
+
+        /* ===== STATS ===== */
+        .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:40px}
+        @media(min-width:1024px){.stats-grid{grid-template-columns:repeat(4,1fr);gap:14px}}
+        .stat-card{border-radius:var(--radius);padding:16px;transition:transform .2s}
+        .stat-card:hover{transform:translateY(-2px)}
+        @media(min-width:1024px){.stat-card{padding:20px}}
+        .stat-card-inner{display:flex;align-items:center;gap:12px}
+        .stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+        .stat-icon.blue{background:linear-gradient(135deg,var(--lab-50),var(--lab-100));color:var(--lab-600)}
+        .stat-icon.green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669}
+        .stat-icon.amber{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706}
+        .stat-icon.violet{background:linear-gradient(135deg,#f5f3ff,#ede9fe);color:#7c3aed}
+        .stat-value{font-size:22px;font-weight:700;color:var(--dark)}
+        @media(min-width:1024px){.stat-value{font-size:26px}}
+        .stat-label{font-size:11px;color:var(--muted);margin-top:1px}
+
+        /* ===== SECTIONS ===== */
+        .section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px}
+        .section-tag{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+        .section-dot{width:8px;height:8px;border-radius:50%}
+        .section-tag-text{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+        .section-title{font-family:var(--serif);font-size:28px;color:var(--dark);font-weight:600}
+        @media(min-width:1024px){.section-title{font-size:34px}}
+        html[dir="rtl"] .section-title{font-family:var(--arabic);font-size:26px}
+        @media(min-width:1024px){html[dir="rtl"] .section-title{font-size:32px}}
+        .section-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);margin-bottom:48px}
+        .btn-refresh{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--lab-600);background:var(--lab-50);border-radius:8px;transition:all .2s;border:1px solid var(--lab-100)}
+        .btn-refresh:hover{background:var(--lab-100);box-shadow:0 2px 8px rgba(12,133,241,.12)}
+        .btn-refresh-desktop{display:none}
+        @media(min-width:640px){.btn-refresh-desktop{display:inline-flex}.btn-refresh-mobile{display:none}}
+
+        /* ===== NEWS GRID ===== */
+        .news-grid{display:grid;grid-template-columns:1fr;gap:16px}
+        @media(min-width:768px){.news-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(min-width:1024px){.news-grid{grid-template-columns:repeat(3,1fr)}}
+        .news-card{border-radius:var(--radius);overflow:hidden;transition:transform .3s,box-shadow .3s}
+        .news-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(10,60,114,.1)}
+        .news-card-body{padding:20px}
+        @media(min-width:1024px){.news-card-body{padding:22px}}
+        .news-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+        .news-badge{padding:4px 10px;font-size:10px;font-weight:600;border-radius:6px;text-transform:uppercase;letter-spacing:.03em}
+        .news-date{font-family:var(--mono);font-size:10px;color:var(--muted)}
+        .news-icon-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:15px}
+        .news-title{font-weight:600;font-size:14px;color:var(--dark);line-height:1.45;margin-bottom:8px}
+        .news-desc{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+        .news-title-ar{font-family:var(--arabic);font-size:12px;color:var(--muted);line-height:2;direction:rtl;text-align:right;border-top:1px solid rgba(220,227,235,.6);padding-top:10px;margin-bottom:12px}
+        .news-footer{display:flex;align-items:center;justify-content:space-between}
+        .news-source{font-size:11px;color:var(--muted)}.news-source i{margin-right:4px}
+        html[dir="rtl"] .news-source i{margin-right:0;margin-left:4px}
+        .news-readmore{font-size:11px;font-weight:600;color:var(--lab-600);transition:color .2s}
+        .news-readmore:hover{color:var(--lab-800)}
+        .badge-blue{background:#dbeafe;color:#1d4ed8}.badge-purple{background:#ede9fe;color:#6d28d9}
+        .badge-red{background:#fee2e2;color:#b91c1c}.badge-green{background:#d1fae5;color:#047857}
+        .badge-amber{background:#fef3c7;color:#b45309}.badge-pink{background:#fce7f3;color:#be185d}
+        .badge-cyan{background:#cffafe;color:#0e7490}.badge-indigo{background:#e0e7ff;color:#4338ca}
+        .icon-bg-blue{background:var(--lab-50);color:var(--lab-600)}.icon-bg-purple{background:#f5f3ff;color:#7c3aed}
+        .icon-bg-red{background:#fef2f2;color:#dc2626}.icon-bg-green{background:#ecfdf5;color:#059669}
+        .icon-bg-amber{background:#fffbeb;color:#d97706}.icon-bg-pink{background:#fdf2f8;color:#db2777}
+        .icon-bg-cyan{background:#ecfeff;color:#0891b2}.icon-bg-indigo{background:#eef2ff;color:#4f46e5}
+        .news-center{text-align:center;margin-top:20px}
+
+        /* Auto-refresh indicator */
+        .auto-refresh-bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px;font-size:11px;color:var(--muted);margin-bottom:16px}
+        .auto-refresh-bar i{color:var(--accent-green)}
+        .refresh-countdown{font-family:var(--mono);color:var(--lab-600);font-weight:500}
+
+        /* ===== DIRECTORY ===== */
+        .directory-controls{border-radius:var(--radius);padding:16px;margin-bottom:16px}
+        @media(min-width:1024px){.directory-controls{padding:20px}}
+        .dir-search-row{display:flex;flex-direction:column;gap:10px}
+        @media(min-width:640px){.dir-search-row{flex-direction:row}}
+        .search-wrap{position:relative;flex:1}
+        .search-wrap>i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px}
+        html[dir="rtl"] .search-wrap>i{left:auto;right:14px}
+        .search-input{width:100%;padding:10px 16px 10px 40px;font-size:13px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.6);outline:none;transition:border-color .2s,box-shadow .2s}
+        html[dir="rtl"] .search-input{padding:10px 40px 10px 16px}
+        .search-input:focus{border-color:var(--lab-400);box-shadow:0 0 0 3px rgba(12,133,241,.12)}
+        .clear-btn{padding:10px 12px;font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:8px;transition:color .2s;display:none}
+        .clear-btn:hover{color:var(--dark)}.clear-btn.visible{display:inline-flex}
+        .cat-filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+        .cat-pill{padding:5px 12px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.7);color:var(--text);transition:all .2s}
+        .cat-pill:hover,.cat-pill.active{background:var(--lab-500);color:#fff;border-color:var(--lab-500)}
+        .cat-pill i{margin-right:4px}
+        html[dir="rtl"] .cat-pill i{margin-right:0;margin-left:4px}
+
+        /* ACCORDION TESTS */
+        .tests-list{display:flex;flex-direction:column;gap:6px}
+        .test-item{border-radius:10px;border:1px solid rgba(220,227,235,.7);border-left:3px solid transparent;overflow:hidden;transition:all .25s;cursor:pointer}
+        html[dir="rtl"] .test-item{border-left:1px solid rgba(220,227,235,.7);border-right:3px solid transparent}
+        .test-item:hover{border-left-color:var(--lab-500)}
+        html[dir="rtl"] .test-item:hover{border-left-color:rgba(220,227,235,.7);border-right-color:var(--lab-500)}
+        .test-item.open{border-left-color:var(--lab-500);box-shadow:0 4px 16px rgba(10,60,114,.06)}
+        html[dir="rtl"] .test-item.open{border-left-color:rgba(220,227,235,.7);border-right-color:var(--lab-500)}
+        .test-header{display:flex;align-items:center;gap:14px;padding:14px 16px;transition:background .2s}
+        @media(min-width:1024px){.test-header{padding:16px 20px}}
+        .test-header:hover{background:rgba(240,247,255,.5)}
+        .test-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+        .test-icon.hematology{background:#fef2f2;color:#ef4444}.test-icon.chemistry{background:#dbeafe;color:#3b82f6}
+        .test-icon.immunology{background:#f3e8ff;color:#a855f7}.test-icon.microbiology{background:#d1fae5;color:#22c55e}
+        .test-icon.endocrine{background:#fef3c7;color:#f59e0b}.test-icon.histopathology{background:#fce7f3;color:#ec4899}
+        .test-icon.coagulation{background:#fff1f2;color:#f43f5e}.test-icon.molecular{background:#ecfeff;color:#06b6d4}
+        .test-icon.serology{background:#fdf4ff;color:#d946ef}.test-icon.toxicology{background:#f0fdf4;color:#16a34a}
+        .test-name-col{flex:1;min-width:0}
+        .test-name{font-weight:600;font-size:13px;color:var(--dark)}
+        .test-abbr-inline{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--lab-600);margin-left:6px}
+        html[dir="rtl"] .test-abbr-inline{margin-left:0;margin-right:6px}
+        .test-specimen-inline{font-size:11px;color:var(--muted);margin-top:1px}
+        .test-chevron{color:var(--muted);font-size:12px;transition:transform .3s;flex-shrink:0}
+        .test-item.open .test-chevron{transform:rotate(180deg)}
+
+        .test-details{max-height:0;overflow:hidden;transition:max-height .35s ease}
+        .test-item.open .test-details{max-height:400px}
+        .test-details-inner{padding:0 16px 16px 68px;border-top:1px solid rgba(220,227,235,.5)}
+        @media(min-width:1024px){.test-details-inner{padding:0 20px 20px 72px}}
+        html[dir="rtl"] .test-details-inner{padding:0 68px 16px 16px}
+        @media(min-width:1024px){html[dir="rtl"] .test-details-inner{padding:0 72px 20px 20px}}
+        .test-desc{font-size:12px;color:var(--text);line-height:1.65;margin-top:12px;margin-bottom:8px}
+        .test-desc-ar{font-family:var(--arabic);font-size:12px;color:var(--muted);line-height:2;direction:rtl;text-align:right;margin-bottom:10px}
+        .test-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted)}
+        .test-meta i{margin-right:4px}
+        html[dir="rtl"] .test-meta i{margin-right:0;margin-left:4px}
+        .test-meta-pill{padding:3px 8px;background:var(--light);border-radius:4px}
+        .no-results{display:none;text-align:center;padding:48px 0}
+        .no-results.visible{display:block}
+        .no-results i{font-size:36px;color:var(--border);margin-bottom:12px;display:block}
+        .no-results p{font-size:13px;color:var(--muted)}
+        .test-count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+        /* ===== ABOUT ===== */
+        .about-grid{display:grid;grid-template-columns:1fr;gap:20px}
+        @media(min-width:1024px){.about-grid{grid-template-columns:repeat(2,1fr)}}
+        .about-card{border-radius:var(--radius);padding:24px}
+        @media(min-width:1024px){.about-card{padding:32px}}
+        .about-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+        .about-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+        .about-avatar.en{background:linear-gradient(135deg,var(--lab-50),var(--lab-100));color:var(--lab-600)}
+        .about-avatar.ar{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669}
+        .about-name{font-weight:600;color:var(--dark);font-size:15px}
+        .about-role{font-size:12px;color:var(--muted)}
+        .about-text{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:14px}
+        .about-text-ar{font-family:var(--arabic);font-size:14px;color:var(--text);line-height:2;margin-bottom:14px}
+        .about-tags{display:flex;flex-wrap:wrap;gap:6px}
+        .about-tag{padding:4px 10px;font-size:10px;font-weight:600;border-radius:6px}
+        .about-tag.en{background:var(--lab-50);color:var(--lab-700)}
+        .about-tag.ar{background:#ecfdf5;color:#047857}
+        .about-tags-ar{justify-content:flex-end}
+        html[dir="rtl"] .about-tags{justify-content:flex-start}
+
+        /* ===== CONTACT ===== */
+        .contact-grid{display:grid;grid-template-columns:1fr;gap:14px}
+        @media(min-width:640px){.contact-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(min-width:1024px){.contact-grid{grid-template-columns:repeat(3,1fr)}}
+        .contact-card{border-radius:var(--radius);padding:20px;transition:all .2s;display:block}
+        .contact-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+        .contact-card.whatsapp:hover{border-color:#86efac;background:rgba(220,252,231,.4)}
+        .contact-card.telegram:hover{border-color:#93c5fd;background:rgba(219,234,254,.4)}
+        .contact-inner{display:flex;align-items:center;gap:12px}
+        .contact-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+        .contact-icon.green{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#16a34a}
+        .contact-icon.blue{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#2563eb}
+        .contact-icon.lab{background:linear-gradient(135deg,var(--lab-100),var(--lab-200));color:var(--lab-600)}
+        .contact-name{font-size:14px;font-weight:600;color:var(--dark)}
+        .contact-detail{font-size:12px;color:var(--muted)}
+
+        /* ===== FOOTER ===== */
+        .footer{background:var(--lab-950);color:var(--lab-300);margin-top:40px}
+        .footer-inner{padding:40px 0}
+        .footer-grid{display:grid;grid-template-columns:1fr;gap:32px;margin-bottom:32px}
+        @media(min-width:768px){.footer-grid{grid-template-columns:repeat(3,1fr)}}
+        .footer-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+        .footer-logo{width:36px;height:36px;background:var(--lab-800);border-radius:8px;display:flex;align-items:center;justify-content:center}
+        .footer-logo i{color:var(--lab-400)}
+        .footer-brand-name{font-family:var(--serif);font-size:18px;color:#fff}
+        .footer-desc{font-size:13px;color:var(--lab-400);line-height:1.6}
+        .footer-heading{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--lab-500);margin-bottom:12px}
+        .footer-links{display:flex;flex-direction:column;gap:8px}
+        .footer-links a{font-size:13px;color:var(--lab-300);transition:color .2s}
+        .footer-links a:hover{color:#fff}
+        .footer-links a i{margin-right:4px}
+        html[dir="rtl"] .footer-links a i{margin-right:0;margin-left:4px}
+        .footer-bottom{border-top:1px solid var(--lab-800);padding-top:24px;display:flex;flex-direction:column;align-items:center;gap:8px}
+        @media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between}}
+        .footer-copy{font-size:11px;color:var(--lab-500)}
+        .footer-credit{font-size:11px;color:var(--lab-400)}
+        .footer-credit strong{color:var(--lab-300);font-weight:500}
+
+        /* ===== WHATSAPP FAB ===== */
+        .whatsapp-fab{position:fixed;bottom:24px;right:24px;z-index:50;width:56px;height:56px;background:linear-gradient(135deg,#25d366,#128c7e);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .3s,box-shadow .3s}
+        .whatsapp-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+        html[dir="rtl"] .whatsapp-fab{right:auto;left:24px}
+
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}
+        ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+        .main-content{padding:32px 0}
+        @media(min-width:1024px){.main-content{padding:48px 0}}
+        .section{margin-bottom:48px}
+
+        /* Loading skeleton */
+        .skeleton{background:linear-gradient(90deg,var(--light) 25%,rgba(255,255,255,.6) 50%,var(--light) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <div class="accent-bar"></div>
+
+    <!-- TICKER -->
+    <div class="ticker-wrap anim-fade-in" id="tickerWrap">
+        <div class="ticker-inner">
+            <div class="ticker-label"><span class="dot"></span><span id="tickerLiveText">Live</span></div>
+            <div class="ticker-track-wrap">
+                <div class="ticker-track" id="tickerTrack"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header anim-fade-up">
+        <div class="container">
+            <div class="header-inner">
+                <div class="header-brand">
+                    <div class="header-logo"><i class="fa-solid fa-microscope"></i></div>
+                    <div>
+                        <h1 class="header-title" id="siteTitle">Global Medical Laboratory News</h1>
+                        <p class="header-subtitle" id="siteSubtitle">Daily updated insights into the world of Lab Medicine</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <nav class="header-nav" id="desktopNav">
+                        <a href="#news" data-en="News" data-ar="الأخبار">News</a>
+                        <a href="#directory" data-en="Test Directory" data-ar="دليل الفحوصات">Test Directory</a>
+                        <a href="#about" data-en="About" data-ar="حول">About</a>
+                        <a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a>
+                    </nav>
+                    <div class="lang-toggle">
+                        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+                        <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+                    </div>
+                    <div class="header-date">
+                        <div id="headerDate" class="header-date-main"></div>
+                        <div id="headerTime" class="header-date-time"></div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px" class="mobile-only">
+                    <div class="lang-toggle" style="display:flex" id="mobileLangToggle">
+                        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+                        <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+                </div>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">
+                <nav id="mobileNav">
+                    <a href="#news"><i class="fa-solid fa-newspaper"></i><span data-en="News" data-ar="الأخبار">News</span></a>
+                    <a href="#directory"><i class="fa-solid fa-vials"></i><span data-en="Test Directory" data-ar="دليل الفحوصات">Test Directory</span></a>
+                    <a href="#about"><i class="fa-solid fa-user-doctor"></i><span data-en="About" data-ar="حول">About</span></a>
+                    <a href="#contact"><i class="fa-solid fa-envelope"></i><span data-en="Contact" data-ar="تواصل">Contact</span></a>
+                </nav>
+                <div class="mobile-controls">
+                    <div class="mobile-date" id="mobileDate"></div>
+                </div>
+            </div>
+        </div>
+        <style>.mobile-only{display:flex}@media(min-width:1024px){.mobile-only{display:none}#mobileLangToggle{display:none!important}}</style>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <!-- STATS -->
+            <div class="stats-grid anim-fade-up d1">
+                <div class="stat-card glass"><div class="stat-card-inner"><div class="stat-icon blue"><i class="fa-solid fa-newspaper"></i></div><div><div class="stat-value">2,847</div><div class="stat-label" data-en="Articles Published" data-ar="مقال منشور">Articles Published</div></div></div></div>
+                <div class="stat-card glass"><div class="stat-card-inner"><div class="stat-icon green"><i class="fa-solid fa-earth-americas"></i></div><div><div class="stat-value">64</div><div class="stat-label" data-en="Countries Covered" data-ar="دولة مغطاة">Countries Covered</div></div></div></div>
+                <div class="stat-card glass"><div class="stat-card-inner"><div class="stat-icon amber"><i class="fa-solid fa-vials"></i></div><div><div class="stat-value" id="testTotalStat">350+</div><div class="stat-label" data-en="Lab Tests Listed" data-ar="فحص مخبري مُدرج">Lab Tests Listed</div></div></div></div>
+                <div class="stat-card glass"><div class="stat-card-inner"><div class="stat-icon violet"><i class="fa-solid fa-users"></i></div><div><div class="stat-value">12K+</div><div class="stat-label" data-en="Monthly Readers" data-ar="قارئ شهرياً">Monthly Readers</div></div></div></div>
+            </div>
+
+            <!-- NEWS -->
+            <section id="news" class="section anim-fade-up d2">
+                <div class="section-header">
+                    <div>
+                        <div class="section-tag"><span class="section-dot" style="background:var(--lab-500)"></span><span class="section-tag-text" style="color:var(--lab-600)" data-en="Latest Updates" data-ar="آخر التحديثات">Latest Updates</span></div>
+                        <h2 class="section-title" data-en="Global Lab News" data-ar="أخبار المختبرات العالمية">Global Lab News</h2>
+                    </div>
+                    <button class="btn-refresh btn-refresh-desktop" onclick="loadNews()"><i class="fa-solid fa-rotate"></i> <span data-en="Refresh" data-ar="تحديث">Refresh</span></button>
+                </div>
+                <div class="auto-refresh-bar glass" style="border-radius:8px">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span data-en="Auto-refreshes every 24 hours" data-ar="يتم التحديث تلقائياً كل 24 ساعة">Auto-refreshes every 24 hours</span>
+                    <span>•</span>
+                    <span data-en="Last update:" data-ar="آخر تحديث:">Last update:</span>
+                    <span class="refresh-countdown" id="lastUpdate"></span>
+                </div>
+                <div id="newsGrid" class="news-grid"></div>
+                <div class="news-center"><button class="btn-refresh btn-refresh-mobile" onclick="loadNews()"><i class="fa-solid fa-rotate"></i> <span data-en="Refresh Feed" data-ar="تحديث الأخبار">Refresh Feed</span></button></div>
+            </section>
+
+            <div class="section-rule"></div>
+
+            <!-- DIRECTORY -->
+            <section id="directory" class="section anim-fade-up d3">
+                <div class="section-header">
+                    <div>
+                        <div class="section-tag"><span class="section-dot" style="background:#059669"></span><span class="section-tag-text" style="color:#059669" data-en="Reference Guide" data-ar="دليل مرجعي">Reference Guide</span></div>
+                        <h2 class="section-title" data-en="Lab Tests Directory" data-ar="دليل الفحوصات المخبرية">Lab Tests Directory</h2>
+                    </div>
+                    <div id="testCount" class="test-count"></div>
+                </div>
+                <div class="directory-controls glass">
+                    <div class="dir-search-row">
+                        <div class="search-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchInput" class="search-input" oninput="filterTests()">
+                        </div>
+                        <button class="clear-btn" id="clearBtn" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="cat-filters" id="catFilters"></div>
+                </div>
+                <div id="testsList" class="tests-list"></div>
+                <div id="noResults" class="no-results"><i class="fa-solid fa-flask-vial"></i><p data-en="No tests match your search criteria." data-ar="لا توجد فحوصات تطابق معايير البحث.">No tests match your search criteria.</p></div>
+            </section>
+
+            <div class="section-rule"></div>
+
+            <!-- ABOUT -->
+            <section id="about" class="section anim-fade-up d4">
+                <div class="section-tag" style="margin-bottom:4px"><span class="section-dot" style="background:#d97706"></span><span class="section-tag-text" style="color:#d97706" data-en="About the Curator" data-ar="عن المحرر">About the Curator</span></div>
+                <h2 class="section-title" style="margin-bottom:24px" data-en="Behind the Platform" data-ar="خلف المنصة">Behind the Platform</h2>
+                <div class="about-grid">
+                    <div class="about-card glass">
+                        <div class="about-header"><div class="about-avatar en"><i class="fa-solid fa-user-doctor"></i></div><div><div class="about-name">Mamon Al-Saudi</div><div class="about-role">Medical Laboratory Specialist</div></div></div>
+                        <p class="about-text">A dedicated Medical Laboratory Professional with an MSc in Medical Laboratory Analysis and extensive experience in Histopathology, Quality Management, and Laboratory Accreditation (CAP, JCI, HCAC). Currently serving as Histopathology Laboratory Supervisor at Jordan University Hospital.</p>
+                        <p class="about-text">This platform bridges the gap between laboratory professionals worldwide, providing curated news, reference guides, and educational resources in both English and Arabic.</p>
+                        <div class="about-tags"><span class="about-tag en">Histopathology</span><span class="about-tag en">Quality Management</span><span class="about-tag en">CAP Inspector</span><span class="about-tag en">HCAC Surveyor</span></div>
+                    </div>
+                    <div class="about-card glass" dir="rtl">
+                        <div class="about-header"><div class="about-avatar ar"><i class="fa-solid fa-flask-vial"></i></div><div><div class="about-name" style="font-family:var(--arabic);font-size:17px">مأمون السعودي</div><div class="about-role" style="font-family:var(--arabic)">أخصائي مختبرات طبية</div></div></div>
+                        <p class="about-text-ar">متخصص في المختبرات الطبية حاصل على ماجستير في تحليل المختبرات الطبية، مع خبرة واسعة في الأنسجة المرضية وإدارة الجودة واعتماد المختبرات الطبية (CAP، JCI، HCAC). يعمل حالياً كمشرف مختبر الأنسجة المرضية في مستشفى الجامعة الأردنية.</p>
+                        <p class="about-text-ar">صُممت هذه المنصة لربط المتخصصين في المختبرات حول العالم، من خلال تقديم أحدث الأخبار والمراجع العلمية والموارد التعليمية باللغتين العربية والإنجليزية.</p>
+                        <div class="about-tags" style="justify-content:flex-start"><span class="about-tag ar" style="font-family:var(--arabic)">الأنسجة المرضية</span><span class="about-tag ar" style="font-family:var(--arabic)">إدارة الجودة</span><span class="about-tag ar" style="font-family:var(--arabic)">اعتماد المختبرات</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-rule"></div>
+
+            <!-- CONTACT -->
+            <section id="contact" class="section anim-fade-up d5">
+                <div class="section-tag" style="margin-bottom:4px"><span class="section-dot" style="background:#7c3aed"></span><span class="section-tag-text" style="color:#7c3aed" data-en="Get in Touch" data-ar="تواصل معنا">Get in Touch</span></div>
+                <h2 class="section-title" style="margin-bottom:24px" data-en="Contact" data-ar="التواصل">Contact</h2>
+                <div class="contact-grid">
+                    <a href="https://wa.me/962799146795" target="_blank" class="contact-card glass whatsapp"><div class="contact-inner"><div class="contact-icon green"><i class="fa-brands fa-whatsapp"></i></div><div><div class="contact-name">WhatsApp</div><div class="contact-detail">+962 799 146 795</div></div></div></a>
+                    <a href="https://t.me/alshamelmls" target="_blank" class="contact-card glass telegram"><div class="contact-inner"><div class="contact-icon blue"><i class="fa-brands fa-telegram"></i></div><div><div class="contact-name" data-en="Telegram Channel" data-ar="قناة تيليغرام">Telegram Channel</div><div class="contact-detail" style="font-family:var(--arabic)">مكتبة طب مخبري</div></div></div></a>
+                    <a href="mailto:mam87soudi@gmail.com" class="contact-card glass"><div class="contact-inner"><div class="contact-icon lab"><i class="fa-solid fa-envelope"></i></div><div><div class="contact-name" data-en="Email" data-ar="البريد الإلكتروني">Email</div><div class="contact-detail">mam87soudi@gmail.com</div></div></div></a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-brand"><div class="footer-logo"><i class="fa-solid fa-microscope"></i></div><span class="footer-brand-name">GMLN</span></div>
+                        <p class="footer-desc" data-en="Your trusted source for medical laboratory news, test references, and professional development resources." data-ar="مصدرك الموثوق لأخبار المختبرات الطبية والمراجع العلمية وموارد التطوير المهني.">Your trusted source for medical laboratory news, test references, and professional development resources.</p>
+                    </div>
+                    <div>
+                        <div class="footer-heading" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</div>
+                        <div class="footer-links"><a href="#news" data-en="Latest News" data-ar="آخر الأخبار">Latest News</a><a href="#directory" data-en="Test Directory" data-ar="دليل الفحوصات">Test Directory</a><a href="#about" data-en="About" data-ar="حول">About</a><a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a></div>
+                    </div>
+                    <div>
+                        <div class="footer-heading" data-en="Resources" data-ar="موارد">Resources</div>
+                        <div class="footer-links"><a href="https://t.me/alshamelmls" target="_blank"><i class="fa-brands fa-telegram"></i> <span data-en="Lab Medicine Library" data-ar="مكتبة طب مخبري">Lab Medicine Library</span></a><a href="https://wa.me/962799146795" target="_blank"><i class="fa-brands fa-whatsapp"></i> <span data-en="WhatsApp Contact" data-ar="تواصل واتساب">WhatsApp Contact</span></a></div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p class="footer-copy">&copy; <span id="footerYear"></span> Global Medical Laboratory News.</p>
+                    <p class="footer-credit">Curated by Medical Laboratory Specialist: <strong>Mamon Al-Saudi</strong></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/962799146795" target="_blank" class="whatsapp-fab"><i class="fa-brands fa-whatsapp"></i></a>
+</div>
+
+<script>
+// ============ LANGUAGE SYSTEM ============
+let currentLang = 'en';
+
+const uiText = {
+    en: {
+        siteTitle: 'Global Medical Laboratory News',
+        siteSubtitle: 'Daily updated insights into the world of Lab Medicine',
+        searchPlaceholder: 'Search tests by name, abbreviation, or specimen type...',
+        tickerLive: 'Live',
+        testFound: (n) => `${n} test${n!==1?'s':''} found`,
+    },
+    ar: {
+        siteTitle: 'أخبار المختبرات الطبية العالمية',
+        siteSubtitle: 'رؤى يومية محدّثة في عالم طب المختبرات',
+        searchPlaceholder: 'ابحث عن فحص بالاسم أو الاختصار أو نوع العينة...',
+        tickerLive: 'مباشر',
+        testFound: (n) => `${n} فحص`,
+    }
+};
+
+function setLang(lang) {
+    currentLang = lang;
+    const html = document.documentElement;
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    html.setAttribute('lang', lang);
+
+    // Update toggle buttons
+    document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', (lang === 'en' && b.textContent === 'EN') || (lang === 'ar' && b.textContent === 'عربي'));
+    });
+
+    // Update data-en/data-ar elements
+    document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = lang === 'ar' ? el.dataset.ar : el.dataset.en;
+    });
+
+    // Update special elements
+    const t = uiText[lang];
+    document.getElementById('siteTitle').textContent = t.siteTitle;
+    document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
+    document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+    document.getElementById('tickerLiveText').textContent = t.tickerLive;
+
+    // Re-render tests to update count text
+    filterTests();
+    loadNews();
+    buildCategoryFilters();
+}
+
+// ============ DATE & TIME ============
+function updateDateTime() {
+    const now = new Date();
+    const locale = currentLang === 'ar' ? 'ar-JO' : 'en-US';
+    const ds = now.toLocaleDateString(locale, {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const ts = now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    const hd=document.getElementById('headerDate'),ht=document.getElementById('headerTime'),md=document.getElementById('mobileDate');
+    if(hd)hd.textContent=ds;if(ht)ht.textContent=ts;if(md)md.textContent=ds;
+}
+updateDateTime();setInterval(updateDateTime,1000);
+document.getElementById('footerYear').textContent=new Date().getFullYear();
+document.getElementById('lastUpdate').textContent=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+
+// ============ MOBILE MENU ============
+const mmb=document.getElementById('mobileMenuBtn'),mm=document.getElementById('mobileMenu');let mo=false;
+mmb.addEventListener('click',()=>{mo=!mo;mm.classList.toggle('show',mo);mmb.innerHTML=mo?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mo=false;mm.classList.remove('show');mmb.innerHTML='<i class="fa-solid fa-bars"></i>';}));
+
+// ============ TICKER ============
+const tickerItems = [
+    {icon:'fa-solid fa-flask-vial', en:'WHO releases updated guidelines for laboratory biosafety protocols 2026', ar:'منظمة الصحة العالمية تُصدر إرشادات محدّثة لبروتوكولات السلامة البيولوجية للمختبرات 2026'},
+    {icon:'fa-solid fa-microscope', en:'AI-powered digital pathology achieves 98.7% accuracy in cancer detection', ar:'التشخيص الرقمي بالذكاء الاصطناعي يحقق دقة 98.7% في الكشف عن السرطان'},
+    {icon:'fa-solid fa-dna', en:'CRISPR-based diagnostic platforms expand to point-of-care testing worldwide', ar:'تشخيصات كريسبر تتوسع لتشمل مواقع الرعاية الأولية حول العالم'},
+    {icon:'fa-solid fa-vial', en:'Global laboratory workforce shortage reaches critical levels — IFBLS report', ar:'أزمة نقص الكوادر في المختبرات تصل مستويات حرجة — تقرير IFBLS'},
+    {icon:'fa-solid fa-shield-virus', en:'New CAP accreditation checklist emphasizes digital pathology validation', ar:'قوائم تحقق CAP الجديدة تركز على التحقق من صحة التشريح المرضي الرقمي'},
+    {icon:'fa-solid fa-syringe', en:'Liquid biopsy technology revolutionizes early cancer detection', ar:'تقنية الخزعة السائلة تُحدث ثورة في الكشف المبكر عن السرطان'}
+];
+
+function buildTicker(){
+    const track=document.getElementById('tickerTrack');
+    const items=[...tickerItems,...tickerItems];
+    track.innerHTML=items.map(t=>`<span class="ticker-item"><i class="${t.icon}"></i>${currentLang==='ar'?t.ar:t.en}</span>`).join('');
+}
+buildTicker();
+
+// ============ NEWS DATA ============
+const newsArticles = [
+    {title:"WHO Publishes Updated Laboratory Biosafety Manual",titleAr:"منظمة الصحة العالمية تُصدر دليل السلامة البيولوجية المحدّث للمختبرات",category:"Biosafety",catAr:"السلامة البيولوجية",date:"2026-03-22",source:"WHO",icon:"fa-solid fa-shield-virus",color:"blue",description:"The updated manual includes revised risk assessment frameworks and new guidelines for handling emerging pathogens in diagnostic laboratories.",descAr:"يتضمن الدليل المحدّث أُطراً منقحة لتقييم المخاطر وإرشادات جديدة للتعامل مع الممرضات الناشئة في المختبرات التشخيصية."},
+    {title:"AI-Driven Pathology Platforms Show 98.7% Accuracy",titleAr:"منصات التشريح المرضي بالذكاء الاصطناعي تحقق دقة 98.7%",category:"Digital Pathology",catAr:"التشريح الرقمي",date:"2026-03-21",source:"Nature Medicine",icon:"fa-solid fa-brain",color:"purple",description:"Multi-center trials demonstrate deep learning algorithms matching senior pathologists in malignancy identification across tissue specimens.",descAr:"تُظهر التجارب متعددة المراكز أن خوارزميات التعلم العميق تطابق كبار أطباء الأنسجة في تحديد الأورام الخبيثة."},
+    {title:"IFBLS Report: Global Lab Workforce Crisis Deepens",titleAr:"تقرير IFBLS: تفاقم أزمة القوى العاملة في المختبرات عالمياً",category:"Workforce",catAr:"القوى العاملة",date:"2026-03-21",source:"IFBLS",icon:"fa-solid fa-users",color:"red",description:"IFBLS warns that staffing shortages have reached critical levels in over 40 countries, threatening diagnostic service quality.",descAr:"يحذر الاتحاد الدولي من أن نقص الكوادر وصل مستويات حرجة في أكثر من 40 دولة."},
+    {title:"CRISPR Diagnostics Expand to Point-of-Care",titleAr:"تشخيصات كريسبر تتوسع لمواقع الرعاية الأولية",category:"Molecular Dx",catAr:"التشخيص الجزيئي",date:"2026-03-20",source:"Lancet",icon:"fa-solid fa-dna",color:"green",description:"New CRISPR-based devices enable rapid, low-cost infectious disease detection at the point of care without lab infrastructure.",descAr:"أجهزة كريسبر الجديدة تتيح كشفاً سريعاً ومنخفض التكلفة للأمراض المعدية دون بنية مختبرية."},
+    {title:"CAP Releases 2026 Accreditation Checklist Updates",titleAr:"CAP تُصدر تحديثات قوائم التحقق للاعتماد 2026",category:"Accreditation",catAr:"الاعتماد",date:"2026-03-19",source:"CAP",icon:"fa-solid fa-clipboard-check",color:"amber",description:"Key changes include enhanced digital pathology validation requirements, expanded quality indicators, and updated PT criteria.",descAr:"تتضمن التغييرات متطلبات محسّنة للتحقق من التشريح الرقمي ومؤشرات جودة موسعة."},
+    {title:"Liquid Biopsy Advances Transform Cancer Monitoring",titleAr:"تطورات الخزعة السائلة تُحدث نقلة في مراقبة السرطان",category:"Oncology",catAr:"الأورام",date:"2026-03-18",source:"JCO",icon:"fa-solid fa-vial",color:"pink",description:"ctDNA analysis enables real-time monitoring of treatment response and early detection of minimal residual disease.",descAr:"تحليل الحمض النووي للورم يتيح مراقبة فورية لاستجابة العلاج والكشف المبكر عن المرض المتبقي."}
+];
+
+function loadNews(){
+    const g=document.getElementById('newsGrid');g.innerHTML='';
+    const isAr=currentLang==='ar';
+    newsArticles.forEach((a,i)=>{
+        const d=new Date(a.date).toLocaleDateString(isAr?'ar-JO':'en-US',{month:'short',day:'numeric',year:'numeric'});
+        const c=document.createElement('div');c.className='news-card glass anim-fade-up';c.style.animationDelay=(i*.08)+'s';
+        c.innerHTML=`<div class="news-card-body">
+            <div class="news-meta"><span class="news-badge badge-${a.color}">${isAr?a.catAr:a.category}</span><span class="news-date">${d}</span></div>
+            <div class="news-icon-box icon-bg-${a.color}"><i class="${a.icon}"></i></div>
+            <h3 class="news-title">${isAr?a.titleAr:a.title}</h3>
+            <p class="news-desc">${isAr?a.descAr:a.description}</p>
+            ${!isAr?`<div class="news-title-ar">${a.titleAr}</div>`:`<div style="font-size:12px;color:var(--muted);line-height:1.6;border-top:1px solid rgba(220,227,235,.5);padding-top:10px;margin-bottom:12px">${a.title}</div>`}
+            <div class="news-footer"><span class="news-source"><i class="fa-solid fa-building-columns"></i>${a.source}</span><button class="news-readmore">${isAr?'اقرأ المزيد ←':'Read More →'}</button></div>
+        </div>`;
+        g.appendChild(c);
+    });
+}
+
+// ============ EXPANDED LAB TESTS (40+) ============
+const labTests = [
+    // HEMATOLOGY
+    {name:"Complete Blood Count",nameAr:"تعداد الدم الكامل",abbr:"CBC",category:"hematology",specimen:"EDTA Blood",specimenAr:"دم EDTA",tat:"1-2 hrs",description:"Measures RBCs, WBCs, hemoglobin, hematocrit, and platelets for overall health evaluation.",descAr:"يقيس خلايا الدم الحمراء والبيضاء والهيموغلوبين والصفائح الدموية لتقييم الصحة العامة."},
+    {name:"Prothrombin Time",nameAr:"زمن البروثرومبين",abbr:"PT/INR",category:"hematology",specimen:"Citrated Plasma",specimenAr:"بلازما سيترات",tat:"1-2 hrs",description:"Evaluates extrinsic coagulation pathway. Monitors warfarin therapy and bleeding risk.",descAr:"يقيّم مسار التخثر الخارجي ويراقب علاج الوارفارين."},
+    {name:"Erythrocyte Sedimentation Rate",nameAr:"سرعة ترسب الدم",abbr:"ESR",category:"hematology",specimen:"EDTA Blood",specimenAr:"دم EDTA",tat:"1 hr",description:"Non-specific inflammation marker. Elevated in infections, autoimmune diseases, and malignancies.",descAr:"مؤشر غير نوعي للالتهاب. يرتفع في العدوى وأمراض المناعة الذاتية."},
+    {name:"D-Dimer",nameAr:"دي-دايمر",abbr:"D-Dimer",category:"hematology",specimen:"Citrated Plasma",specimenAr:"بلازما سيترات",tat:"1-2 hrs",description:"Fibrin degradation product. Rules out DVT/PE with high negative predictive value.",descAr:"ناتج تحلل الفيبرين يُستخدم لاستبعاد الجلطات الوريدية والانصمام الرئوي."},
+    {name:"Reticulocyte Count",nameAr:"تعداد الخلايا الشبكية",abbr:"Retic",category:"hematology",specimen:"EDTA Blood",specimenAr:"دم EDTA",tat:"2-4 hrs",description:"Measures immature RBCs to assess bone marrow erythropoietic activity and anemia classification.",descAr:"يقيس خلايا الدم الحمراء غير الناضجة لتقييم نشاط نقي العظم."},
+    {name:"Peripheral Blood Smear",nameAr:"مسحة دم محيطية",abbr:"PBS",category:"hematology",specimen:"EDTA Blood",specimenAr:"دم EDTA",tat:"2-4 hrs",description:"Microscopic exam of blood cells morphology for diagnosing hematological disorders.",descAr:"فحص مجهري لشكل خلايا الدم لتشخيص الاضطرابات الدموية."},
+
+    // CHEMISTRY
+    {name:"Hemoglobin A1c",nameAr:"الهيموغلوبين السكري",abbr:"HbA1c",category:"chemistry",specimen:"EDTA Blood",specimenAr:"دم EDTA",tat:"4-6 hrs",description:"Reflects average blood glucose over 2-3 months. Key diabetes management marker.",descAr:"يعكس متوسط السكر في الدم خلال 2-3 أشهر. مؤشر أساسي لإدارة السكري."},
+    {name:"Liver Function Panel",nameAr:"فحص وظائف الكبد",abbr:"LFT",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Includes ALT, AST, ALP, bilirubin, albumin to evaluate liver health.",descAr:"يشمل إنزيمات الكبد والبيليروبين والألبومين لتقييم صحة الكبد."},
+    {name:"Renal Function Panel",nameAr:"فحص وظائف الكلى",abbr:"RFT",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Creatinine, BUN, electrolytes, eGFR to assess kidney function.",descAr:"يقيس الكرياتينين واليوريا والشوارد لتقييم وظائف الكلى."},
+    {name:"Lipid Profile",nameAr:"الدهون",abbr:"Lipids",category:"chemistry",specimen:"Serum (Fasting)",specimenAr:"مصل (صائم)",tat:"2-4 hrs",description:"Total cholesterol, HDL, LDL, triglycerides for cardiovascular risk assessment.",descAr:"الكوليسترول الكلي وHDL وLDL والدهون الثلاثية لتقييم مخاطر القلب."},
+    {name:"Urinalysis",nameAr:"تحليل البول",abbr:"UA",category:"chemistry",specimen:"Mid-stream Urine",specimenAr:"بول وسط التبول",tat:"1-2 hrs",description:"Physical, chemical, microscopic exam. Screens for UTI, kidney disease, diabetes.",descAr:"فحص فيزيائي وكيميائي ومجهري للبول للكشف عن أمراض متعددة."},
+    {name:"Vitamin D (25-OH)",nameAr:"فيتامين د",abbr:"Vit D",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Measures 25-hydroxyvitamin D for assessing vitamin D status and bone health.",descAr:"يقيس فيتامين د لتقييم صحة العظام."},
+    {name:"Ferritin",nameAr:"الفيريتين",abbr:"Ferritin",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Reflects iron stores. Low = iron deficiency; high = inflammation or overload.",descAr:"يعكس مخزون الحديد. انخفاضه يشير لنقص الحديد."},
+    {name:"Uric Acid",nameAr:"حمض البول",abbr:"Uric Acid",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Elevated in gout, kidney disease, and certain metabolic disorders.",descAr:"يرتفع في النقرس وأمراض الكلى والاضطرابات الأيضية."},
+    {name:"Electrolyte Panel",nameAr:"الشوارد",abbr:"Na/K/Cl/CO2",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"1-2 hrs",description:"Sodium, potassium, chloride, bicarbonate. Essential for fluid/acid-base balance.",descAr:"الصوديوم والبوتاسيوم والكلور والبيكربونات لتوازن السوائل والأحماض."},
+    {name:"Calcium & Phosphorus",nameAr:"الكالسيوم والفوسفور",abbr:"Ca/PO4",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Evaluates bone metabolism, parathyroid function, and mineral balance.",descAr:"يقيّم أيض العظام ووظائف جارات الدرق وتوازن المعادن."},
+    {name:"Magnesium",nameAr:"المغنيسيوم",abbr:"Mg",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Important for neuromuscular, cardiac function. Deficiency causes arrhythmias.",descAr:"مهم لوظائف العضلات والأعصاب والقلب. نقصه يسبب اضطرابات النظم."},
+    {name:"Cardiac Troponin",nameAr:"تروبونين القلب",abbr:"cTnI/cTnT",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"1 hr",description:"Gold standard biomarker for myocardial infarction diagnosis.",descAr:"المعيار الذهبي لتشخيص احتشاء عضلة القلب."},
+    {name:"Amylase & Lipase",nameAr:"الأميلاز والليباز",abbr:"Amy/Lip",category:"chemistry",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Pancreatic enzymes. Elevated in acute pancreatitis.",descAr:"إنزيمات البنكرياس. ترتفع في التهاب البنكرياس الحاد."},
+
+    // IMMUNOLOGY
+    {name:"C-Reactive Protein",nameAr:"بروتين سي التفاعلي",abbr:"CRP",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"2-4 hrs",description:"Acute phase reactant. Sensitive marker for inflammation and infection.",descAr:"بروتين الطور الحاد. مؤشر حساس للالتهاب والعدوى."},
+    {name:"Antinuclear Antibody",nameAr:"الأجسام المضادة للنواة",abbr:"ANA",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"24-48 hrs",description:"Screens for SLE, scleroderma, Sjögren's and other autoimmune disorders.",descAr:"يكشف عن الذئبة الحمامية الجهازية واضطرابات المناعة الذاتية."},
+    {name:"Prostate-Specific Antigen",nameAr:"المستضد البروستاتي النوعي",abbr:"PSA",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Tumor marker for prostate cancer screening and monitoring.",descAr:"دلالة أورام لفحص ومتابعة سرطان البروستاتا."},
+    {name:"Rheumatoid Factor",nameAr:"عامل الروماتويد",abbr:"RF",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Autoantibody associated with rheumatoid arthritis and other autoimmune diseases.",descAr:"جسم مضاد ذاتي مرتبط بالتهاب المفاصل الروماتويدي."},
+    {name:"Anti-CCP Antibodies",nameAr:"أجسام مضادة Anti-CCP",abbr:"Anti-CCP",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"24-48 hrs",description:"Highly specific for rheumatoid arthritis. Better specificity than RF.",descAr:"نوعي جداً لالتهاب المفاصل الروماتويدي. أكثر تحديداً من RF."},
+    {name:"Complement C3/C4",nameAr:"المتممة C3/C4",abbr:"C3/C4",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Measures complement proteins. Low levels in SLE, glomerulonephritis.",descAr:"يقيس بروتينات المتممة. تنخفض في الذئبة والتهاب الكبيبات."},
+    {name:"Immunoglobulins (IgG/IgA/IgM)",nameAr:"الغلوبولينات المناعية",abbr:"Ig Panel",category:"immunology",specimen:"Serum",specimenAr:"مصل",tat:"24-48 hrs",description:"Quantitative measurement of immunoglobulin classes for immune deficiency evaluation.",descAr:"قياس كمي لأصناف الغلوبولينات المناعية لتقييم نقص المناعة."},
+
+    // ENDOCRINE
+    {name:"Thyroid Stimulating Hormone",nameAr:"هرمون الغدة الدرقية",abbr:"TSH",category:"endocrine",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Primary screening for thyroid disorders. High = hypothyroid; Low = hyperthyroid.",descAr:"الفحص الأولي لاضطرابات الغدة الدرقية."},
+    {name:"Free T4 (Thyroxine)",nameAr:"الثايروكسين الحر",abbr:"FT4",category:"endocrine",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Measures unbound thyroxine. Used with TSH for thyroid function evaluation.",descAr:"يقيس الثايروكسين الحر لتقييم وظائف الغدة الدرقية."},
+    {name:"Cortisol (Serum)",nameAr:"الكورتيزول",abbr:"Cortisol",category:"endocrine",specimen:"Serum (AM/PM)",specimenAr:"مصل (صباح/مساء)",tat:"4-6 hrs",description:"Evaluates adrenal function. Diagnoses Cushing's and Addison's disease.",descAr:"يقيّم وظائف الغدة الكظرية. يشخص متلازمة كوشينغ ومرض أديسون."},
+    {name:"Insulin",nameAr:"الإنسولين",abbr:"Insulin",category:"endocrine",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Measures insulin levels for insulin resistance assessment and hypoglycemia workup.",descAr:"يقيس مستويات الإنسولين لتقييم مقاومة الإنسولين وفحص نقص السكر."},
+    {name:"Parathyroid Hormone",nameAr:"هرمون جارات الدرق",abbr:"PTH",category:"endocrine",specimen:"Serum",specimenAr:"مصل",tat:"4-8 hrs",description:"Regulates calcium. Elevated in hyperparathyroidism and vitamin D deficiency.",descAr:"ينظم الكالسيوم. يرتفع في فرط نشاط جارات الدرق ونقص فيتامين د."},
+    {name:"Prolactin",nameAr:"البرولاكتين",abbr:"PRL",category:"endocrine",specimen:"Serum",specimenAr:"مصل",tat:"4-6 hrs",description:"Elevated in pituitary adenomas, medication effects, and hypothyroidism.",descAr:"يرتفع في أورام الغدة النخامية وتأثيرات الأدوية وقصور الدرقية."},
+
+    // MICROBIOLOGY
+    {name:"Blood Culture",nameAr:"مزرعة الدم",abbr:"BC",category:"microbiology",specimen:"Blood (Aerobic/Anaerobic)",specimenAr:"دم (هوائي/لاهوائي)",tat:"24-72 hrs",description:"Detects bacteremia/fungemia. Critical for sepsis identification.",descAr:"يكشف تجرثم الدم. حاسم لتحديد الإنتان."},
+    {name:"Urine Culture & Sensitivity",nameAr:"مزرعة البول",abbr:"U C/S",category:"microbiology",specimen:"Mid-stream Urine",specimenAr:"بول وسط التبول",tat:"24-48 hrs",description:"Gold standard for UTI diagnosis. Identifies uropathogens and antibiotic susceptibility.",descAr:"المعيار الذهبي لتشخيص التهاب المسالك البولية."},
+    {name:"Stool Culture",nameAr:"مزرعة البراز",abbr:"Stool C/S",category:"microbiology",specimen:"Stool Sample",specimenAr:"عينة براز",tat:"48-72 hrs",description:"Detects Salmonella, Shigella, Campylobacter, pathogenic E. coli.",descAr:"يكشف السالمونيلا والشيغيلا والكامبيلوباكتر."},
+    {name:"Sputum Culture",nameAr:"مزرعة البلغم",abbr:"Sputum C/S",category:"microbiology",specimen:"Sputum",specimenAr:"بلغم",tat:"48-72 hrs",description:"Identifies respiratory pathogens. Includes Gram stain and sensitivity.",descAr:"يحدد مسببات أمراض الجهاز التنفسي مع صبغة غرام والحساسية."},
+    {name:"Wound Culture",nameAr:"مزرعة الجرح",abbr:"Wound C/S",category:"microbiology",specimen:"Wound Swab",specimenAr:"مسحة جرح",tat:"48-72 hrs",description:"Identifies wound pathogens including MRSA. Guides antibiotic therapy.",descAr:"يحدد مسببات أمراض الجروح بما في ذلك MRSA ويوجه العلاج بالمضادات."},
+
+    // HISTOPATHOLOGY
+    {name:"Immunohistochemistry Panel",nameAr:"الكيمياء النسيجية المناعية",abbr:"IHC",category:"histopathology",specimen:"FFPE Tissue",specimenAr:"نسيج مثبت بالفورمالين",tat:"24-72 hrs",description:"Detects specific proteins in tissue using antibodies. Essential for tumor classification and targeted therapy.",descAr:"يكشف بروتينات محددة في الأنسجة. أساسي لتصنيف الأورام والعلاج الموجه."},
+    {name:"Hematoxylin & Eosin Stain",nameAr:"صبغة الهيماتوكسيلين والإيوسين",abbr:"H&E",category:"histopathology",specimen:"FFPE Tissue",specimenAr:"نسيج مثبت",tat:"4-24 hrs",description:"Gold standard histological stain. Nuclei = blue-purple; cytoplasm = pink.",descAr:"الصبغة النسيجية الأساسية. النواة بالأزرق والسيتوبلازم بالوردي."},
+    {name:"Periodic Acid\u2013Schiff",nameAr:"صبغة PAS",abbr:"PAS",category:"histopathology",specimen:"FFPE Tissue",specimenAr:"نسيج مثبت",tat:"4-8 hrs",description:"Detects glycogen, glycoproteins. Useful for fungal infections and storage diseases.",descAr:"تكشف الغلايكوجين والبروتينات السكرية. مفيدة للعدوى الفطرية."},
+    {name:"Pap Smear (ThinPrep)",nameAr:"فحص باب (ThinPrep)",abbr:"Pap",category:"histopathology",specimen:"Cervical Cells",specimenAr:"خلايا عنق الرحم",tat:"24-48 hrs",description:"Liquid-based cervical cytology for dysplasia and carcinoma screening.",descAr:"فحص خلايا عنق الرحم بالتقنية السائلة للكشف عن خلل التنسج والسرطان."},
+    {name:"Masson's Trichrome",nameAr:"صبغة ماسون ثلاثية الألوان",abbr:"Trichrome",category:"histopathology",specimen:"FFPE Tissue",specimenAr:"نسيج مثبت",tat:"4-8 hrs",description:"Differentiates collagen from muscle. Evaluates fibrosis in liver and kidney biopsies.",descAr:"تفرّق الكولاجين عن العضلات. تقيّم التليف في خزعات الكبد والكلى."},
+    {name:"Congo Red Stain",nameAr:"صبغة كونغو الحمراء",abbr:"Congo Red",category:"histopathology",specimen:"FFPE Tissue",specimenAr:"نسيج مثبت",tat:"4-8 hrs",description:"Identifies amyloid deposits. Shows apple-green birefringence under polarized light.",descAr:"تحدد ترسبات الأميلويد. تظهر انكسار ضوء أخضر تفاحي تحت الضوء المستقطب."},
+];
+
+const categories = [
+    {id:'all', en:'All Tests', ar:'جميع الفحوصات', icon:''},
+    {id:'hematology', en:'Hematology', ar:'أمراض الدم', icon:'fa-solid fa-droplet', color:'#ef4444'},
+    {id:'chemistry', en:'Chemistry', ar:'الكيمياء', icon:'fa-solid fa-flask', color:'#3b82f6'},
+    {id:'immunology', en:'Immunology', ar:'المناعة', icon:'fa-solid fa-shield-virus', color:'#a855f7'},
+    {id:'microbiology', en:'Microbiology', ar:'الأحياء الدقيقة', icon:'fa-solid fa-bacterium', color:'#22c55e'},
+    {id:'endocrine', en:'Endocrine', ar:'الغدد الصماء', icon:'fa-solid fa-syringe', color:'#f59e0b'},
+    {id:'histopathology', en:'Histopathology', ar:'الأنسجة المرضية', icon:'fa-solid fa-microscope', color:'#ec4899'},
+];
+
+let currentCategory='all';
+
+function buildCategoryFilters(){
+    const wrap=document.getElementById('catFilters');
+    const isAr=currentLang==='ar';
+    wrap.innerHTML=categories.map(c=>{
+        const label=isAr?c.ar:c.en;
+        const iconHtml=c.icon?`<i class="${c.icon}" style="color:${c.color}"></i>`:'';
+        return `<button class="cat-pill${c.id===currentCategory?' active':''}" onclick="filterByCategory('${c.id}',this)">${iconHtml}${label}</button>`;
+    }).join('');
+}
+
+function renderTests(tests){
+    const list=document.getElementById('testsList'),noRes=document.getElementById('noResults'),tc=document.getElementById('testCount');
+    list.innerHTML='';
+    tc.textContent=uiText[currentLang].testFound(tests.length);
+    if(!tests.length){noRes.classList.add('visible');return;}noRes.classList.remove('visible');
+    const isAr=currentLang==='ar';
+    const catIconMap={hematology:'fa-solid fa-droplet',chemistry:'fa-solid fa-flask',immunology:'fa-solid fa-shield-virus',microbiology:'fa-solid fa-bacterium',endocrine:'fa-solid fa-syringe',histopathology:'fa-solid fa-microscope'};
+    tests.forEach((t,i)=>{
+        const el=document.createElement('div');el.className='test-item glass anim-slide-right';el.style.animationDelay=Math.min(i*.03,.6)+'s';
+        el.innerHTML=`
+            <div class="test-header" onclick="this.parentElement.classList.toggle('open')">
+                <div class="test-icon ${t.category}"><i class="${catIconMap[t.category]||'fa-solid fa-flask'}"></i></div>
+                <div class="test-name-col">
+                    <div><span class="test-name">${isAr?t.nameAr:t.name}</span><span class="test-abbr-inline">${t.abbr}</span></div>
+                    <div class="test-specimen-inline"><i class="fa-solid fa-vial" style="margin-right:4px;font-size:10px"></i>${isAr?t.specimenAr:t.specimen}</div>
+                </div>
+                <i class="fa-solid fa-chevron-down test-chevron"></i>
+            </div>
+            <div class="test-details">
+                <div class="test-details-inner">
+                    <p class="test-desc">${isAr?t.descAr:t.description}</p>
+                    <p class="test-desc-ar">${isAr?t.description:t.descAr}</p>
+                    <div class="test-meta">
+                        <span class="test-meta-pill"><i class="fa-solid fa-vial"></i>${isAr?t.specimenAr:t.specimen}</span>
+                        <span class="test-meta-pill"><i class="fa-regular fa-clock"></i>TAT: ${t.tat}</span>
+                        <span class="test-meta-pill" style="text-transform:capitalize"><i class="fa-solid fa-tag"></i>${isAr?categories.find(c=>c.id===t.category)?.ar||t.category:t.category}</span>
+                    </div>
+                </div>
+            </div>`;
+        list.appendChild(el);
+    });
+}
+
+function filterTests(){
+    const q=document.getElementById('searchInput').value.toLowerCase().trim();
+    const cb=document.getElementById('clearBtn');
+    if(q)cb.classList.add('visible');else cb.classList.remove('visible');
+    let f=labTests;
+    if(currentCategory!=='all')f=f.filter(t=>t.category===currentCategory);
+    if(q)f=f.filter(t=>t.name.toLowerCase().includes(q)||t.nameAr.includes(q)||t.abbr.toLowerCase().includes(q)||t.specimen.toLowerCase().includes(q)||t.category.toLowerCase().includes(q)||t.description.toLowerCase().includes(q)||t.descAr.includes(q));
+    renderTests(f);
+}
+function clearSearch(){document.getElementById('searchInput').value='';document.getElementById('clearBtn').classList.remove('visible');filterTests();}
+function filterByCategory(cat,btn){currentCategory=cat;document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));if(btn)btn.classList.add('active');filterTests();}
+
+// ============ INIT ============
+document.addEventListener('DOMContentLoaded',()=>{
+    loadNews();
+    buildCategoryFilters();
+    renderTests(labTests);
+    document.getElementById('testTotalStat').textContent=labTests.length+'+';
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+
+// Auto-refresh news simulation (every 24 hrs concept — updates timestamp)
+setInterval(()=>{
+    document.getElementById('lastUpdate').textContent=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+},60000);
+</script>
+</body>
+</html>
