@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Medical Laboratory News</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--serif:'Playfair Display',Georgia,serif;--sans:'Plus Jakarta Sans',system-ui,sans-serif;
+--mono:'JetBrains Mono',monospace;--arabic:'Noto Naskh Arabic',serif;
+--lab-50:#f0f7ff;--lab-100:#e0efff;--lab-200:#b9dfff;--lab-300:#7cc4ff;
+--lab-400:#36a5ff;--lab-500:#0c85f1;--lab-600:#0068ce;--lab-700:#0053a7;
+--lab-800:#05478a;--lab-900:#0a3c72;--lab-950:#07264b;
+--white:#f8fafb;--light:#eef2f6;--border:#dce3eb;
+--muted:#8b97a7;--text:#374151;--dark:#111827;--radius:12px;
+}
+body{font-family:var(--sans);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;
+background:#f0f4f8;
+background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(12,133,241,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(5,150,105,.05) 0%,transparent 50%),radial-gradient(ellipse 40% 30% at 10% 60%,rgba(124,58,237,.04) 0%,transparent 50%);
+background-attachment:fixed;overflow-x:hidden}
+html[dir="rtl"] body,html[dir="rtl"] input,html[dir="rtl"] button{font-family:var(--arabic)}
+body::before{content:'';position:fixed;width:500px;height:500px;top:-150px;right:-100px;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:.4;background:radial-gradient(circle,rgba(12,133,241,.12),transparent 70%);animation:floatO 20s ease-in-out infinite}
+body::after{content:'';position:fixed;width:400px;height:400px;bottom:-100px;left:-80px;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:.4;background:radial-gradient(circle,rgba(5,150,105,.1),transparent 70%);animation:floatO 25s ease-in-out infinite reverse}
+@keyframes floatO{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+.pw{position:relative;z-index:1}
+a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;background:none;font-family:inherit}input{font-family:inherit}
+.ctn{max-width:1200px;margin:0 auto;padding:0 16px}
+@media(min-width:640px){.ctn{padding:0 24px}}@media(min-width:1024px){.ctn{padding:0 32px}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideR{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.afu{animation:fadeUp .6s ease-out both}.afi{animation:fadeIn .5s ease-out both}.asr{animation:slideR .5s ease-out both}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}
+.gl{background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.55);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.accent-bar{height:3px;background:linear-gradient(90deg,var(--lab-500),#059669,#7c3aed)}
+
+/* TICKER */
+.tkw{background:var(--lab-950);color:#fff;padding:8px 0;overflow:hidden}
+.tki{display:flex;align-items:center}.tkl{flex-shrink:0;padding:0 16px;display:flex;align-items:center;gap:8px;border-right:1px solid var(--lab-800)}
+html[dir="rtl"] .tkl{border-right:none;border-left:1px solid var(--lab-800)}
+.tkl .dot{width:8px;height:8px;background:#ef4444;border-radius:50%;animation:pulseDot 1.5s ease-in-out infinite}
+.tkl span{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--lab-300)}
+.tktw{overflow:hidden;flex:1}.tktr{display:flex;white-space:nowrap;animation:ticker 50s linear infinite}
+.tktr:hover{animation-play-state:paused}.tkit{padding:0 32px;font-size:13px;color:var(--lab-200)}
+.tkit i{margin-right:8px;color:var(--lab-400)}html[dir="rtl"] .tkit i{margin-right:0;margin-left:8px}
+
+/* HEADER */
+.hdr{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+@media(min-width:1024px){.hdr-in{padding:20px 0}}
+.hdr-br{display:flex;align-items:center;gap:14px}
+.hdr-lg{width:44px;height:44px;background:linear-gradient(135deg,var(--lab-500),var(--lab-700));border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(12,133,241,.25)}
+.hdr-lg i{color:#fff;font-size:17px}
+.hdr-t{font-family:var(--serif);font-size:20px;color:var(--dark);line-height:1.2;font-weight:600}
+@media(min-width:640px){.hdr-t{font-size:24px}}@media(min-width:1024px){.hdr-t{font-size:28px}}
+html[dir="rtl"] .hdr-t{font-family:var(--arabic)}
+.hdr-st{font-size:11px;color:var(--muted);margin-top:1px}
+.hdr-r{display:none;align-items:center;gap:20px}
+@media(min-width:1024px){.hdr-r{display:flex}}
+.hdr-nav{display:flex;gap:16px}.hdr-nav a{font-size:13px;font-weight:500;color:var(--text);transition:color .2s;padding:4px 0;position:relative}
+.hdr-nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--lab-500);transition:width .3s;border-radius:1px}
+.hdr-nav a:hover{color:var(--lab-600)}.hdr-nav a:hover::after{width:100%}
+html[dir="rtl"] .hdr-nav a::after{left:auto;right:0}
+.ltg{display:flex;align-items:center;background:var(--light);border-radius:8px;padding:3px;gap:2px;border:1px solid var(--border)}
+.lb{padding:5px 12px;font-size:11px;font-weight:600;border-radius:6px;transition:all .2s;color:var(--muted)}
+.lb.on{background:#fff;color:var(--lab-600);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.hdr-dt{padding-left:16px;border-left:1px solid var(--border);text-align:right}
+html[dir="rtl"] .hdr-dt{padding-left:0;padding-right:16px;border-left:none;border-right:1px solid var(--border);text-align:left}
+.hdr-dm{font-size:12px;font-weight:500;color:var(--dark)}.hdr-dtm{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:1px}
+.mmb{display:flex;align-items:center;gap:8px}.mmb-btn{padding:8px;color:var(--muted);font-size:18px}
+@media(min-width:1024px){.mmb{display:none}}
+.mmenu{display:none;padding-bottom:16px}.mmenu.show{display:block}
+.mmenu nav{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--border);padding-top:14px}
+.mmenu nav a{font-size:14px;font-weight:500;color:var(--text);padding:6px 0;display:flex;align-items:center;gap:10px}
+.mmenu nav a i{width:20px;text-align:center;color:var(--muted);font-size:14px}
+.mc{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.md{font-family:var(--mono);font-size:11px;color:var(--muted)}
+@media(min-width:1024px){.mmenu{display:none!important}}
+
+/* TABS */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:32px;padding:4px;background:rgba(255,255,255,.5);border-radius:12px;border:1px solid rgba(220,227,235,.5)}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;transition:all .2s;color:var(--muted);display:flex;align-items:center;gap:8px}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.5)}
+.tab.on{background:#fff;color:var(--lab-600);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tab i{font-size:14px}
+.tab-panel{display:none}.tab-panel.on{display:block}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px}
+@media(min-width:1024px){.sg{grid-template-columns:repeat(4,1fr);gap:14px}}
+.sc{border-radius:var(--radius);padding:16px;transition:transform .2s}.sc:hover{transform:translateY(-2px)}
+.sci{display:flex;align-items:center;gap:12px}
+.si{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.si.bl{background:linear-gradient(135deg,var(--lab-50),var(--lab-100));color:var(--lab-600)}
+.si.gr{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669}
+.si.am{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706}
+.si.vi{background:linear-gradient(135deg,#f5f3ff,#ede9fe);color:#7c3aed}
+.sv{font-size:22px;font-weight:700;color:var(--dark)}.sl{font-size:11px;color:var(--muted);margin-top:1px}
+
+/* SECTION */
+.sh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px}
+.stag{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sdot{width:8px;height:8px;border-radius:50%}
+.stagtx{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.stitle{font-family:var(--serif);font-size:26px;color:var(--dark);font-weight:600}
+@media(min-width:1024px){.stitle{font-size:32px}}
+html[dir="rtl"] .stitle{font-family:var(--arabic)}
+.sr{height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);margin:40px 0}
+.br{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--lab-600);background:var(--lab-50);border-radius:8px;transition:all .2s;border:1px solid var(--lab-100)}
+.br:hover{background:var(--lab-100)}
+.brd{display:none}@media(min-width:640px){.brd{display:inline-flex}.brm{display:none}}
+
+/* NEWS */
+.ng{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.ng{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.ng{grid-template-columns:repeat(3,1fr)}}
+.nc{border-radius:var(--radius);overflow:hidden;transition:transform .3s,box-shadow .3s}
+.nc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(10,60,114,.1)}
+.ncb{padding:20px}
+.nm{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.nbdg{padding:4px 10px;font-size:10px;font-weight:600;border-radius:6px;text-transform:uppercase;letter-spacing:.03em}
+.ndt{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.nib{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:15px}
+.ntt{font-weight:600;font-size:14px;color:var(--dark);line-height:1.45;margin-bottom:8px}
+.nds{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.nta{font-family:var(--arabic);font-size:12px;color:var(--muted);line-height:2;direction:rtl;text-align:right;border-top:1px solid rgba(220,227,235,.5);padding-top:10px;margin-bottom:12px}
+.nf{display:flex;align-items:center;justify-content:space-between}
+.nsr{font-size:11px;color:var(--muted)}.nsr i{margin-right:4px}
+.nrm{font-size:11px;font-weight:600;color:var(--lab-600);transition:color .2s;display:inline-flex;align-items:center;gap:4px}
+.nrm:hover{color:var(--lab-800)}
+.bdbl{background:#dbeafe;color:#1d4ed8}.bdpu{background:#ede9fe;color:#6d28d9}
+.bdre{background:#fee2e2;color:#b91c1c}.bdgr{background:#d1fae5;color:#047857}
+.bdam{background:#fef3c7;color:#b45309}.bdpi{background:#fce7f3;color:#be185d}
+.ibbl{background:var(--lab-50);color:var(--lab-600)}.ibpu{background:#f5f3ff;color:#7c3aed}
+.ibre{background:#fef2f2;color:#dc2626}.ibgr{background:#ecfdf5;color:#059669}
+.ibam{background:#fffbeb;color:#d97706}.ibpi{background:#fdf2f8;color:#db2777}
+
+/* DIRECTORY */
+.dctl{border-radius:var(--radius);padding:16px;margin-bottom:16px}
+@media(min-width:1024px){.dctl{padding:20px}}
+.dsr{display:flex;flex-direction:column;gap:10px}@media(min-width:640px){.dsr{flex-direction:row}}
+.swp{position:relative;flex:1}.swp>i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px}
+html[dir="rtl"] .swp>i{left:auto;right:14px}
+.sinp{width:100%;padding:10px 16px 10px 40px;font-size:13px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.6);outline:none;transition:border-color .2s,box-shadow .2s}
+html[dir="rtl"] .sinp{padding:10px 40px 10px 16px}
+.sinp:focus{border-color:var(--lab-400);box-shadow:0 0 0 3px rgba(12,133,241,.12)}
+.clb{padding:10px 12px;font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:8px;display:none}.clb.vis{display:inline-flex}
+.cf{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.cp{padding:5px 12px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.7);color:var(--text);transition:all .2s}
+.cp:hover,.cp.on{background:var(--lab-500);color:#fff;border-color:var(--lab-500)}
+.cp i{margin-right:4px}html[dir="rtl"] .cp i{margin-right:0;margin-left:4px}
+
+/* TEST CARDS IN GRID */
+.tgrid{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:768px){.tgrid{grid-template-columns:repeat(2,1fr)}}
+.ti{border-radius:10px;border:1px solid rgba(220,227,235,.7);border-left:3px solid transparent;overflow:hidden;transition:all .25s;cursor:pointer}
+html[dir="rtl"] .ti{border-left:1px solid rgba(220,227,235,.7);border-right:3px solid transparent}
+.ti:hover{border-left-color:var(--lab-400)}
+html[dir="rtl"] .ti:hover{border-left-color:rgba(220,227,235,.7);border-right-color:var(--lab-400)}
+.ti.open{border-left-color:var(--lab-500);box-shadow:0 4px 16px rgba(10,60,114,.06)}
+html[dir="rtl"] .ti.open{border-left-color:rgba(220,227,235,.7);border-right-color:var(--lab-500)}
+.th{display:flex;align-items:center;gap:12px;padding:12px 14px;transition:background .2s}
+.th:hover{background:rgba(240,247,255,.5)}
+.tic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.tic.hematology{background:#fef2f2;color:#ef4444}.tic.chemistry{background:#dbeafe;color:#3b82f6}
+.tic.immunology{background:#f3e8ff;color:#a855f7}.tic.microbiology{background:#d1fae5;color:#22c55e}
+.tic.endocrine{background:#fef3c7;color:#f59e0b}.tic.histopathology{background:#fce7f3;color:#ec4899}
+.tic.coagulation{background:#fff1f2;color:#f43f5e}.tic.molecular{background:#ecfeff;color:#06b6d4}
+.tnc{flex:1;min-width:0}
+.tn{font-weight:600;font-size:13px;color:var(--dark);display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.tab-code{font-family:var(--mono);font-size:10px;color:var(--lab-600);background:var(--lab-50);padding:1px 6px;border-radius:3px}
+.tsp{font-size:10px;color:var(--muted);margin-top:2px}
+.tch{color:var(--muted);font-size:11px;transition:transform .3s;flex-shrink:0}
+.ti.open .tch{transform:rotate(180deg)}
+.td{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.ti.open .td{max-height:500px}
+.tdi{padding:0 14px 14px 62px;border-top:1px solid rgba(220,227,235,.4)}
+html[dir="rtl"] .tdi{padding:0 62px 14px 14px}
+.tdesc{font-size:12px;color:var(--text);line-height:1.65;margin-top:10px;margin-bottom:6px}
+.tdescAr{font-family:var(--arabic);font-size:12px;color:var(--muted);line-height:2;direction:rtl;text-align:right;margin-bottom:8px}
+.tmeta{display:flex;flex-wrap:wrap;gap:8px;font-size:10px;color:var(--muted)}
+.tmp{padding:3px 8px;background:var(--light);border-radius:4px}
+.tmp i{margin-right:3px}html[dir="rtl"] .tmp i{margin-right:0;margin-left:3px}
+.nores{display:none;text-align:center;padding:48px 0}.nores.vis{display:block}
+.nores i{font-size:36px;color:var(--border);margin-bottom:12px;display:block}
+.tc{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* MANUAL / QC CONTENT */
+.manual-content{columns:1;gap:20px}
+@media(min-width:768px){.manual-content{columns:2}}
+.mcard{break-inside:avoid;border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.mcard-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.mcard-ic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mcard-t{font-weight:700;font-size:14px;color:var(--dark)}
+.mcard ul{list-style:none;padding:0}
+.mcard li{font-size:12px;color:var(--text);line-height:1.7;padding:4px 0 4px 20px;position:relative}
+.mcard li::before{content:'';position:absolute;left:6px;top:12px;width:6px;height:6px;border-radius:50%;background:var(--lab-400)}
+html[dir="rtl"] .mcard li{padding:4px 20px 4px 0}
+html[dir="rtl"] .mcard li::before{left:auto;right:6px}
+.mcard p{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:8px}
+.mcard-ar{font-family:var(--arabic);font-size:12px;color:var(--muted);line-height:2;direction:rtl;text-align:right;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)}
+
+/* ABOUT, CONTACT, FOOTER */
+.abg{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:1024px){.abg{grid-template-columns:repeat(2,1fr)}}
+.abc{border-radius:var(--radius);padding:24px}
+.abh{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.abav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.abav.en{background:linear-gradient(135deg,var(--lab-50),var(--lab-100));color:var(--lab-600)}
+.abav.ar{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669}
+.abn{font-weight:600;color:var(--dark);font-size:15px}.abr{font-size:12px;color:var(--muted)}
+.abt{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:14px}
+.abt-ar{font-family:var(--arabic);font-size:14px;color:var(--text);line-height:2;margin-bottom:14px}
+.abtags{display:flex;flex-wrap:wrap;gap:6px}
+.abtag{padding:4px 10px;font-size:10px;font-weight:600;border-radius:6px}
+.abtag.en{background:var(--lab-50);color:var(--lab-700)}.abtag.ar{background:#ecfdf5;color:#047857}
+.cg{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.cg{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.cg{grid-template-columns:repeat(3,1fr)}}
+.cc{border-radius:var(--radius);padding:20px;transition:all .2s;display:block}
+.cc:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.cci{display:flex;align-items:center;gap:12px}
+.ccic{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.ccic.g{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#16a34a}
+.ccic.b{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#2563eb}
+.ccic.l{background:linear-gradient(135deg,var(--lab-100),var(--lab-200));color:var(--lab-600)}
+.ccn{font-size:14px;font-weight:600;color:var(--dark)}.ccd{font-size:12px;color:var(--muted)}
+.ftr{background:var(--lab-950);color:var(--lab-300);margin-top:40px}
+.ftr-in{padding:40px 0}
+.fg{display:grid;grid-template-columns:1fr;gap:32px;margin-bottom:32px}
+@media(min-width:768px){.fg{grid-template-columns:repeat(3,1fr)}}
+.fb{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.flogo{width:36px;height:36px;background:var(--lab-800);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.flogo i{color:var(--lab-400)}.fbname{font-family:var(--serif);font-size:18px;color:#fff}
+.fdesc{font-size:13px;color:var(--lab-400);line-height:1.6}
+.fh{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--lab-500);margin-bottom:12px}
+.fl{display:flex;flex-direction:column;gap:8px}.fl a{font-size:13px;color:var(--lab-300);transition:color .2s}
+.fl a:hover{color:#fff}.fl a i{margin-right:4px}html[dir="rtl"] .fl a i{margin-right:0;margin-left:4px}
+.fbot{border-top:1px solid var(--lab-800);padding-top:24px;display:flex;flex-direction:column;align-items:center;gap:8px}
+@media(min-width:640px){.fbot{flex-direction:row;justify-content:space-between}}
+.fcopy{font-size:11px;color:var(--lab-500)}.fcred{font-size:11px;color:var(--lab-400)}.fcred strong{color:var(--lab-300);font-weight:500}
+.wfab{position:fixed;bottom:24px;right:24px;z-index:50;width:56px;height:56px;background:linear-gradient(135deg,#25d366,#128c7e);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .3s,box-shadow .3s}
+.wfab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+html[dir="rtl"] .wfab{right:auto;left:24px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.mctn{padding:32px 0}@media(min-width:1024px){.mctn{padding:48px 0}}
+.sec{margin-bottom:40px}
+</style>
+</head>
+<body>
+<div class="pw">
+<div class="accent-bar"></div>
+
+<div class="tkw afi" id="tickerWrap"><div class="tki"><div class="tkl"><span class="dot"></span><span id="tkLive">Live</span></div><div class="tktw"><div class="tktr" id="tkTrack"></div></div></div></div>
+
+<header class="hdr afu">
+<div class="ctn">
+<div class="hdr-in">
+<div class="hdr-br">
+<div class="hdr-lg"><i class="fa-solid fa-microscope"></i></div>
+<div><h1 class="hdr-t" id="sT">Global Medical Laboratory News</h1><p class="hdr-st" id="sST">Daily updated insights into the world of Lab Medicine</p></div>
+</div>
+<div class="hdr-r">
+<nav class="hdr-nav" id="dNav"></nav>
+<div class="ltg"><button class="lb on" onclick="setLang('en')">EN</button><button class="lb" onclick="setLang('ar')">عربي</button></div>
+<div class="hdr-dt"><div id="hDate" class="hdr-dm"></div><div id="hTime" class="hdr-dtm"></div></div>
+</div>
+<div class="mmb">
+<div class="ltg" id="mLtg"><button class="lb on" onclick="setLang('en')">EN</button><button class="lb" onclick="setLang('ar')">عربي</button></div>
+<button class="mmb-btn" id="mmBtn"><i class="fa-solid fa-bars"></i></button>
+</div>
+</div>
+<div class="mmenu" id="mmenu"><nav id="mNav"></nav><div class="mc"><div class="md" id="mDate"></div></div></div>
+</div>
+</header>
+
+<main class="mctn">
+<div class="ctn">
+
+<!-- MAIN TABS -->
+<div class="tabs afu d1" id="mainTabs"></div>
+
+<!-- ===== TAB 1: HOME (NEWS) ===== -->
+<div class="tab-panel on" id="panel-home">
+<div class="sg afu d1">
+<div class="sc gl"><div class="sci"><div class="si bl"><i class="fa-solid fa-newspaper"></i></div><div><div class="sv">2,847</div><div class="sl" data-en="Articles Published" data-ar="مقال منشور">Articles Published</div></div></div></div>
+<div class="sc gl"><div class="sci"><div class="si gr"><i class="fa-solid fa-earth-americas"></i></div><div><div class="sv">64</div><div class="sl" data-en="Countries Covered" data-ar="دولة مغطاة">Countries Covered</div></div></div></div>
+<div class="sc gl"><div class="sci"><div class="si am"><i class="fa-solid fa-vials"></i></div><div><div class="sv" id="tStat">60+</div><div class="sl" data-en="Lab Tests Listed" data-ar="فحص مخبري">Lab Tests Listed</div></div></div></div>
+<div class="sc gl"><div class="sci"><div class="si vi"><i class="fa-solid fa-users"></i></div><div><div class="sv">12K+</div><div class="sl" data-en="Monthly Readers" data-ar="قارئ شهرياً">Monthly Readers</div></div></div></div>
+</div>
+
+<div class="sh afu d2">
+<div><div class="stag"><span class="sdot" style="background:var(--lab-500)"></span><span class="stagtx" style="color:var(--lab-600)" data-en="Latest Updates" data-ar="آخر التحديثات">Latest Updates</span></div>
+<h2 class="stitle" data-en="Global Lab News" data-ar="أخبار المختبرات العالمية">Global Lab News</h2></div>
+</div>
+<div id="aiNewsBar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 16px;border-radius:10px;margin-bottom:16px;font-size:12px" class="gl">
+<div style="display:flex;align-items:center;gap:8px;color:var(--muted)">
+<i class="fa-solid fa-robot" style="color:var(--lab-500);font-size:14px"></i>
+<span data-en="AI-Powered: Claude searches the web and generates fresh lab news daily." data-ar="مدعوم بالذكاء الاصطناعي: Claude يبحث في الإنترنت ويولّد أخبار مختبرات جديدة يومياً.">AI-Powered: Claude searches the web and generates fresh lab news daily.</span>
+</div>
+<button onclick="fetchAINews()" id="aiNewsBtn" class="br" style="white-space:nowrap"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-en="Generate Today's News" data-ar="توليد أخبار اليوم">Generate Today's News</span></button>
+</div>
+<div id="newsStatus" style="display:none;text-align:center;padding:32px;font-size:13px;color:var(--muted)"></div>
+<div id="newsGrid" class="ng"></div>
+</div>
+
+<!-- ===== TAB 2: TESTS ===== -->
+<div class="tab-panel" id="panel-tests">
+<div class="sh"><div><div class="stag"><span class="sdot" style="background:#059669"></span><span class="stagtx" style="color:#059669" data-en="Reference Guide" data-ar="دليل مرجعي">Reference Guide</span></div>
+<h2 class="stitle" data-en="Lab Tests Directory" data-ar="دليل الفحوصات المخبرية">Lab Tests Directory</h2></div>
+<div id="tCount" class="tc"></div></div>
+<div class="dctl gl"><div class="dsr"><div class="swp"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="sInp" class="sinp" oninput="filterTests()"></div><button class="clb" id="clBtn" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button></div>
+<div class="cf" id="catF"></div></div>
+<div id="tList" class="tgrid"></div>
+<div id="noRes" class="nores"><i class="fa-solid fa-flask-vial"></i><p data-en="No tests match your search." data-ar="لا توجد فحوصات مطابقة.">No tests match your search.</p></div>
+</div>
+
+<!-- ===== TAB 3: SAFETY MANUAL ===== -->
+<div class="tab-panel" id="panel-safety">
+<div class="sh"><div><div class="stag"><span class="sdot" style="background:#dc2626"></span><span class="stagtx" style="color:#dc2626" data-en="Safety Standards" data-ar="معايير السلامة">Safety Standards</span></div>
+<h2 class="stitle" data-en="Lab Safety Manual" data-ar="دليل سلامة المختبر">Lab Safety Manual</h2></div></div>
+<div class="manual-content" id="safetyContent"></div>
+</div>
+
+<!-- ===== TAB 4: QC BASICS ===== -->
+<div class="tab-panel" id="panel-qc">
+<div class="sh"><div><div class="stag"><span class="sdot" style="background:#7c3aed"></span><span class="stagtx" style="color:#7c3aed" data-en="Quality Control" data-ar="ضبط الجودة">Quality Control</span></div>
+<h2 class="stitle" data-en="QC Basics for Medical Laboratories" data-ar="أساسيات ضبط الجودة للمختبرات الطبية">QC Basics for Medical Laboratories</h2></div></div>
+<div class="manual-content" id="qcContent"></div>
+</div>
+
+<!-- ===== TAB 5: ABOUT/CONTACT ===== -->
+<div class="tab-panel" id="panel-about">
+<div class="stag" style="margin-bottom:4px"><span class="sdot" style="background:#d97706"></span><span class="stagtx" style="color:#d97706" data-en="About the Curator" data-ar="عن المحرر">About the Curator</span></div>
+<h2 class="stitle" style="margin-bottom:24px" data-en="Behind the Platform" data-ar="خلف المنصة">Behind the Platform</h2>
+<div class="abg">
+<div class="abc gl"><div class="abh"><div class="abav en"><i class="fa-solid fa-user-doctor"></i></div><div><div class="abn">Mamon Al-Saudi</div><div class="abr">Medical Laboratory Specialist</div></div></div><p class="abt">A dedicated Medical Laboratory Professional with an MSc in Medical Laboratory Analysis and extensive experience in Histopathology, Quality Management, and Laboratory Accreditation (CAP, JCI, HCAC). Currently serving as Histopathology Laboratory Supervisor at Jordan University Hospital.</p><p class="abt">This platform bridges the gap between laboratory professionals worldwide with curated news, references, and educational resources in English and Arabic.</p><div class="abtags"><span class="abtag en">Histopathology</span><span class="abtag en">Quality Management</span><span class="abtag en">CAP Inspector</span><span class="abtag en">HCAC Surveyor</span></div></div>
+<div class="abc gl" dir="rtl"><div class="abh"><div class="abav ar"><i class="fa-solid fa-flask-vial"></i></div><div><div class="abn" style="font-family:var(--arabic);font-size:17px">مأمون السعودي</div><div class="abr" style="font-family:var(--arabic)">أخصائي مختبرات طبية</div></div></div><p class="abt-ar">متخصص في المختبرات الطبية حاصل على ماجستير في تحليل المختبرات الطبية مع خبرة واسعة في الأنسجة المرضية وإدارة الجودة واعتماد المختبرات (CAP, JCI, HCAC). يعمل حالياً مشرف مختبر الأنسجة المرضية في مستشفى الجامعة الأردنية.</p><p class="abt-ar">صُممت المنصة لربط المتخصصين في المختبرات حول العالم من خلال أخبار ومراجع وموارد تعليمية باللغتين العربية والإنجليزية.</p><div class="abtags"><span class="abtag ar" style="font-family:var(--arabic)">الأنسجة المرضية</span><span class="abtag ar" style="font-family:var(--arabic)">إدارة الجودة</span><span class="abtag ar" style="font-family:var(--arabic)">اعتماد المختبرات</span></div></div>
+</div>
+<div class="sr"></div>
+<div class="stag" style="margin-bottom:4px"><span class="sdot" style="background:#7c3aed"></span><span class="stagtx" style="color:#7c3aed" data-en="Get in Touch" data-ar="تواصل معنا">Get in Touch</span></div>
+<h2 class="stitle" style="margin-bottom:24px" data-en="Contact" data-ar="التواصل">Contact</h2>
+<div class="cg">
+<a href="https://wa.me/962799146795" target="_blank" class="cc gl"><div class="cci"><div class="ccic g"><i class="fa-brands fa-whatsapp"></i></div><div><div class="ccn">WhatsApp</div><div class="ccd">+962 799 146 795</div></div></div></a>
+<a href="https://t.me/alshamelmls" target="_blank" class="cc gl"><div class="cci"><div class="ccic b"><i class="fa-brands fa-telegram"></i></div><div><div class="ccn" data-en="Telegram Channel" data-ar="قناة تيليغرام">Telegram Channel</div><div class="ccd" style="font-family:var(--arabic)">مكتبة طب مخبري</div></div></div></a>
+<a href="#" onclick="window.location='mail'+'to:'+'mam87'+'soudi'+'@gma'+'il.com';return false" class="cc gl"><div class="cci"><div class="ccic l"><i class="fa-solid fa-envelope"></i></div><div><div class="ccn" data-en="Email" data-ar="البريد الإلكتروني">Email</div><div class="ccd" id="emlDisp">mam87soudi@​gmail.com</div></div></div></a>
+</div>
+</div>
+
+</div>
+</main>
+
+<footer class="ftr">
+<div class="ctn"><div class="ftr-in">
+<div class="fg">
+<div><div class="fb"><div class="flogo"><i class="fa-solid fa-microscope"></i></div><span class="fbname">GMLN</span></div><p class="fdesc" data-en="Your trusted source for medical laboratory news, test references, and professional development." data-ar="مصدرك الموثوق لأخبار المختبرات والمراجع العلمية والتطوير المهني.">Your trusted source for medical laboratory news, test references, and professional development.</p></div>
+<div><div class="fh" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</div><div class="fl"><a href="#" onclick="switchTab('home')" data-en="Latest News" data-ar="الأخبار">Latest News</a><a href="#" onclick="switchTab('tests')" data-en="Test Directory" data-ar="الفحوصات">Test Directory</a><a href="#" onclick="switchTab('safety')" data-en="Safety Manual" data-ar="دليل السلامة">Safety Manual</a><a href="#" onclick="switchTab('qc')" data-en="QC Basics" data-ar="ضبط الجودة">QC Basics</a></div></div>
+<div><div class="fh" data-en="Resources" data-ar="موارد">Resources</div><div class="fl"><a href="https://t.me/alshamelmls" target="_blank"><i class="fa-brands fa-telegram"></i><span data-en="Lab Medicine Library" data-ar="مكتبة طب مخبري">Lab Medicine Library</span></a><a href="https://wa.me/962799146795" target="_blank"><i class="fa-brands fa-whatsapp"></i><span data-en="WhatsApp Contact" data-ar="تواصل واتساب">WhatsApp Contact</span></a></div></div>
+</div>
+<div class="fbot"><p class="fcopy">&copy; <span id="fYear"></span> Global Medical Laboratory News.</p><p class="fcred">Curated by Medical Laboratory Specialist: <strong>Mamon Al-Saudi</strong></p></div>
+</div></div>
+</footer>
+
+<a href="https://wa.me/962799146795" target="_blank" class="wfab"><i class="fa-brands fa-whatsapp"></i></a>
+</div>
+
+<script>
+// =========== LANGUAGE ===========
+let L='en';
+const UI={en:{title:'Global Medical Laboratory News',sub:'Daily updated insights into the world of Lab Medicine',sp:'Search tests by name, abbreviation, or specimen...',live:'Live',tf:n=>`${n} test${n!==1?'s':''} found`},
+ar:{title:'أخبار المختبرات الطبية العالمية',sub:'رؤى يومية محدّثة في عالم طب المختبرات',sp:'ابحث بالاسم أو الاختصار أو نوع العينة...',live:'مباشر',tf:n=>`${n} فحص`}};
+
+const navItems=[
+{id:'home',en:'News',ar:'الأخبار',icon:'fa-solid fa-newspaper'},
+{id:'tests',en:'Test Directory',ar:'دليل الفحوصات',icon:'fa-solid fa-vials'},
+{id:'safety',en:'Safety Manual',ar:'دليل السلامة',icon:'fa-solid fa-shield-halved'},
+{id:'qc',en:'QC Basics',ar:'ضبط الجودة',icon:'fa-solid fa-chart-line'},
+{id:'about',en:'About & Contact',ar:'حول والتواصل',icon:'fa-solid fa-user-doctor'}
+];
+
+function buildNav(){
+const dn=document.getElementById('dNav'),mn=document.getElementById('mNav');
+dn.innerHTML=navItems.map(n=>`<a href="#" onclick="switchTab('${n.id}');return false">${L==='ar'?n.ar:n.en}</a>`).join('');
+mn.innerHTML=navItems.map(n=>`<a href="#" onclick="switchTab('${n.id}');return false"><i class="${n.icon}"></i><span>${L==='ar'?n.ar:n.en}</span></a>`).join('');
+}
+
+function buildTabs(){
+document.getElementById('mainTabs').innerHTML=navItems.map(n=>`<button class="tab${n.id==='home'?' on':''}" onclick="switchTab('${n.id}')" data-tab="${n.id}"><i class="${n.icon}"></i><span>${L==='ar'?n.ar:n.en}</span></button>`).join('');
+}
+
+function switchTab(id){
+document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===id));
+document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('on',p.id==='panel-'+id));
+window.scrollTo({top:document.querySelector('.mctn').offsetTop-80,behavior:'smooth'});
+// close mobile menu
+mo=false;document.getElementById('mmenu').classList.remove('show');document.getElementById('mmBtn').innerHTML='<i class="fa-solid fa-bars"></i>';
+}
+
+function setLang(l){
+L=l;document.documentElement.setAttribute('dir',l==='ar'?'rtl':'ltr');document.documentElement.setAttribute('lang',l);
+document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',(l==='en'&&b.textContent==='EN')||(l==='ar'&&b.textContent==='عربي')));
+document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=l==='ar'?el.dataset.ar:el.dataset.en;});
+document.getElementById('sT').textContent=UI[l].title;
+document.getElementById('sST').textContent=UI[l].sub;
+document.getElementById('sInp').placeholder=UI[l].sp;
+document.getElementById('tkLive').textContent=UI[l].live;
+buildNav();buildTabs();buildTicker();renderNews(currentNews);buildCats();filterTests();buildSafety();buildQC();
+}
+
+// =========== DATE/TIME ===========
+function updateDT(){
+const now=new Date(),loc=L==='ar'?'ar-JO':'en-US';
+document.getElementById('hDate').textContent=now.toLocaleDateString(loc,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('hTime').textContent=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+document.getElementById('mDate').textContent=now.toLocaleDateString(loc,{weekday:'short',month:'short',day:'numeric'});
+}
+updateDT();setInterval(updateDT,1000);
+document.getElementById('fYear').textContent=new Date().getFullYear();
+
+// =========== MOBILE MENU ===========
+let mo=false;
+document.getElementById('mmBtn').addEventListener('click',()=>{mo=!mo;document.getElementById('mmenu').classList.toggle('show',mo);document.getElementById('mmBtn').innerHTML=mo?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
+
+// =========== TICKER ===========
+const tkData=[
+{icon:'fa-solid fa-flask-vial',en:'WHO releases updated laboratory biosafety protocols 2026',ar:'منظمة الصحة العالمية تُصدر بروتوكولات السلامة البيولوجية المحدّثة 2026'},
+{icon:'fa-solid fa-microscope',en:'AI digital pathology achieves 98.7% accuracy in cancer detection',ar:'التشريح المرضي الرقمي بالذكاء الاصطناعي يحقق دقة 98.7% في كشف السرطان'},
+{icon:'fa-solid fa-dna',en:'CRISPR diagnostics expand to point-of-care testing worldwide',ar:'تشخيصات كريسبر تتوسع لمواقع الرعاية الأولية حول العالم'},
+{icon:'fa-solid fa-vial',en:'Global laboratory workforce shortage reaches critical levels',ar:'أزمة نقص الكوادر المخبرية تصل مستويات حرجة عالمياً'},
+{icon:'fa-solid fa-shield-virus',en:'New CAP checklist emphasizes digital pathology validation',ar:'قوائم CAP الجديدة تركز على التحقق من التشريح المرضي الرقمي'},
+];
+function buildTicker(){document.getElementById('tkTrack').innerHTML=[...tkData,...tkData].map(t=>`<span class="tkit"><i class="${t.icon}"></i>${L==='ar'?t.ar:t.en}</span>`).join('');}
+
+// =========== NEWS (AI-POWERED via Claude API + Web Search) ===========
+const fallbackNews=[
+{title:"WHO Publishes Updated Laboratory Biosafety Manual",titleAr:"منظمة الصحة العالمية تُصدر دليل السلامة البيولوجية المحدّث",cat:"Biosafety",catAr:"السلامة البيولوجية",date:"2026-03-22",src:"WHO",icon:"fa-solid fa-shield-virus",clr:"bl",desc:"Revised risk assessment frameworks and new guidelines for handling emerging pathogens in diagnostic laboratories.",descAr:"أُطر منقحة لتقييم المخاطر وإرشادات جديدة للتعامل مع الممرضات الناشئة.",url:"https://www.who.int"},
+{title:"AI Pathology Platforms Show 98.7% Accuracy",titleAr:"منصات التشريح المرضي بالذكاء الاصطناعي تحقق دقة 98.7%",cat:"Digital Pathology",catAr:"التشريح الرقمي",date:"2026-03-21",src:"Nature Medicine",icon:"fa-solid fa-brain",clr:"pu",desc:"Deep learning algorithms match senior pathologists in malignancy identification across tissue specimens.",descAr:"خوارزميات التعلم العميق تطابق كبار أطباء الأنسجة في تحديد الأورام الخبيثة.",url:"https://www.nature.com/nm/"},
+{title:"IFBLS: Global Lab Workforce Crisis Deepens",titleAr:"IFBLS: تفاقم أزمة القوى العاملة في المختبرات عالمياً",cat:"Workforce",catAr:"القوى العاملة",date:"2026-03-21",src:"IFBLS",icon:"fa-solid fa-users",clr:"re",desc:"Staffing shortages have reached critical levels in over 40 countries, threatening diagnostic quality.",descAr:"نقص الكوادر وصل مستويات حرجة في أكثر من 40 دولة.",url:"https://www.ifbls.org/"},
+{title:"CRISPR Diagnostics Expand to Point-of-Care",titleAr:"تشخيصات كريسبر تتوسع لمواقع الرعاية الأولية",cat:"Molecular Dx",catAr:"التشخيص الجزيئي",date:"2026-03-20",src:"The Lancet",icon:"fa-solid fa-dna",clr:"gr",desc:"New CRISPR devices enable rapid, low-cost infectious disease detection without laboratory infrastructure.",descAr:"أجهزة كريسبر الجديدة تتيح كشفاً سريعاً ومنخفض التكلفة دون بنية مختبرية.",url:"https://www.thelancet.com/"},
+{title:"CAP Releases 2026 Accreditation Updates",titleAr:"CAP تُصدر تحديثات الاعتماد 2026",cat:"Accreditation",catAr:"الاعتماد",date:"2026-03-19",src:"CAP",icon:"fa-solid fa-clipboard-check",clr:"am",desc:"Enhanced digital pathology validation, expanded quality indicators, and updated proficiency testing.",descAr:"متطلبات محسّنة للتشريح الرقمي ومؤشرات جودة موسعة.",url:"https://www.cap.org/"},
+{title:"Liquid Biopsy Transforms Cancer Monitoring",titleAr:"الخزعة السائلة تُحدث نقلة في مراقبة السرطان",cat:"Oncology",catAr:"الأورام",date:"2026-03-18",src:"JCO",icon:"fa-solid fa-vial",clr:"pi",desc:"ctDNA analysis enables real-time treatment monitoring and early minimal residual disease detection.",descAr:"تحليل ctDNA يتيح مراقبة فورية للعلاج والكشف المبكر عن المرض المتبقي.",url:"https://ascopubs.org/journal/jco"}
+];
+
+let currentNews = fallbackNews;
+
+const iconMap = {'biosafety':'fa-solid fa-shield-virus','digital pathology':'fa-solid fa-brain','ai':'fa-solid fa-brain','workforce':'fa-solid fa-users','molecular':'fa-solid fa-dna','crispr':'fa-solid fa-dna','accreditation':'fa-solid fa-clipboard-check','oncology':'fa-solid fa-vial','quality':'fa-solid fa-chart-line','hematology':'fa-solid fa-droplet','microbiology':'fa-solid fa-bacterium','immunology':'fa-solid fa-shield-virus','chemistry':'fa-solid fa-flask','genomics':'fa-solid fa-dna','automation':'fa-solid fa-robot','education':'fa-solid fa-graduation-cap','regulation':'fa-solid fa-gavel','technology':'fa-solid fa-microchip','research':'fa-solid fa-microscope','default':'fa-solid fa-flask-vial'};
+const clrMap = {'biosafety':'bl','digital pathology':'pu','ai':'pu','workforce':'re','molecular':'gr','crispr':'gr','accreditation':'am','oncology':'pi','quality':'bl','hematology':'re','microbiology':'gr','immunology':'pu','chemistry':'bl','genomics':'gr','automation':'am','education':'bl','regulation':'am','technology':'pu','research':'bl','default':'bl'};
+
+function getIconForCat(cat){const k=cat.toLowerCase();for(const[key,val] of Object.entries(iconMap)){if(k.includes(key))return val;}return iconMap.default;}
+function getClrForCat(cat){const k=cat.toLowerCase();for(const[key,val] of Object.entries(clrMap)){if(k.includes(key))return val;}return clrMap.default;}
+
+function renderNews(newsArr){
+const g=document.getElementById('newsGrid');g.innerHTML='';const a=L==='ar';
+newsArr.forEach((n,i)=>{
+const dt=n.date?new Date(n.date).toLocaleDateString(a?'ar-JO':'en-US',{month:'short',day:'numeric'}):'Today';
+const c=document.createElement('div');c.className='nc gl afu';c.style.animationDelay=(i*.08)+'s';
+const clr=n.clr||getClrForCat(n.cat||'');
+const icon=n.icon||getIconForCat(n.cat||'');
+c.innerHTML=`<div class="ncb"><div class="nm"><span class="nbdg bd${clr}">${a?(n.catAr||n.cat):n.cat}</span><span class="ndt">${dt}</span></div><div class="nib ib${clr}"><i class="${icon}"></i></div><h3 class="ntt">${a?(n.titleAr||n.title):n.title}</h3><p class="nds">${a?(n.descAr||n.desc):n.desc}</p>${n.titleAr&&!a?`<div class="nta">${n.titleAr}</div>`:n.title&&a?`<div style="font-size:12px;color:var(--muted);line-height:1.6;border-top:1px solid rgba(220,227,235,.5);padding-top:10px;margin-bottom:12px">${n.title}</div>`:''}<div class="nf"><span class="nsr"><i class="fa-solid fa-building-columns"></i>${n.src||'Source'}</span>${n.url?`<a href="${n.url}" target="_blank" class="nrm">${a?'اقرأ المزيد':'Read More'} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:9px"></i></a>`:''}</div></div>`;
+g.appendChild(c);});
+}
+
+function loadNews(){renderNews(currentNews);}
+
+// AI News Fetcher using Claude API + Web Search
+async function fetchAINews(){
+const btn=document.getElementById('aiNewsBtn');
+const status=document.getElementById('newsStatus');
+const grid=document.getElementById('newsGrid');
+
+btn.disabled=true;
+btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> <span>'+(L==='ar'?'جارٍ البحث والتوليد...':'Searching & Generating...')+'</span>';
+status.style.display='block';
+status.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;gap:12px"><i class="fa-solid fa-satellite-dish" style="font-size:28px;color:var(--lab-400);animation:pulseDot 1.5s infinite"></i><span>'+(L==='ar'?'Claude يبحث في الإنترنت عن آخر أخبار المختبرات الطبية...':'Claude is searching the web for the latest medical laboratory news...')+'</span></div>';
+grid.innerHTML='';
+
+const today = new Date().toISOString().split('T')[0];
+
+try{
+const response = await fetch("https://api.anthropic.com/v1/messages", {
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+    model:"claude-sonnet-4-20250514",
+    max_tokens:1000,
+    tools:[{type:"web_search_20250305",name:"web_search"}],
+    messages:[{role:"user",content:`Search the web for the latest medical laboratory news, clinical laboratory science news, pathology news, and lab diagnostics news from this week. Then return ONLY a JSON array (no markdown, no backticks, no preamble) of exactly 6 news items. Each item must have these fields:
+- "title": English title
+- "titleAr": Arabic translation of title
+- "cat": Category (e.g. "Biosafety", "Digital Pathology", "Molecular Dx", "Quality", "Accreditation", "Oncology", "Hematology", "Microbiology", "Automation", "Research")
+- "catAr": Arabic category
+- "date": "${today}"
+- "src": Source name
+- "desc": 1-2 sentence English description
+- "descAr": Arabic translation of description
+- "url": URL to the original article
+
+Return ONLY the JSON array, nothing else.`}]
+  })
+});
+
+const data = await response.json();
+
+// Extract text content from response
+let text = '';
+if(data.content){
+  for(const block of data.content){
+    if(block.type==='text' && block.text) text += block.text;
+  }
+}
+
+// Clean and parse JSON
+text = text.replace(/```json|```/g,'').trim();
+// Find the JSON array
+const arrMatch = text.match(/\[[\s\S]*\]/);
+if(arrMatch){
+  const parsed = JSON.parse(arrMatch[0]);
+  if(Array.isArray(parsed) && parsed.length>0){
+    currentNews = parsed;
+    status.style.display='none';
+    renderNews(currentNews);
+    btn.disabled=false;
+    btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> <span>'+(L==='ar'?'توليد أخبار جديدة':'Generate Fresh News')+'</span>';
+    return;
+  }
+}
+throw new Error('Could not parse news');
+
+}catch(err){
+console.error('AI News fetch error:',err);
+status.style.display='none';
+currentNews = fallbackNews;
+renderNews(currentNews);
+btn.disabled=false;
+btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> <span>'+(L==='ar'?'حاول مجدداً':'Try Again')+'</span>';
+}
+}
+
+// =========== LAB TESTS (60+) ===========
+const T=[
+// HEMATOLOGY
+{n:"Complete Blood Count",a:"تعداد الدم الكامل",ab:"CBC",c:"hematology",s:"EDTA Blood",sa:"دم EDTA",t:"1-2h",d:"Measures RBCs, WBCs, hemoglobin, hematocrit, platelets for overall health evaluation.",da:"يقيس خلايا الدم الحمراء والبيضاء والهيموغلوبين والصفائح الدموية."},
+{n:"Prothrombin Time",a:"زمن البروثرومبين",ab:"PT/INR",c:"hematology",s:"Citrated Plasma",sa:"بلازما سيترات",t:"1-2h",d:"Evaluates extrinsic coagulation. Monitors warfarin therapy.",da:"يقيّم مسار التخثر الخارجي ويراقب علاج الوارفارين."},
+{n:"Activated Partial Thromboplastin Time",a:"زمن الثرومبوبلاستين الجزئي المنشط",ab:"aPTT",c:"hematology",s:"Citrated Plasma",sa:"بلازما سيترات",t:"1-2h",d:"Evaluates intrinsic coagulation pathway. Monitors heparin therapy.",da:"يقيّم مسار التخثر الداخلي ويراقب علاج الهيبارين."},
+{n:"ESR",a:"سرعة ترسب الدم",ab:"ESR",c:"hematology",s:"EDTA Blood",sa:"دم EDTA",t:"1h",d:"Non-specific inflammation marker. Elevated in infections, autoimmune diseases.",da:"مؤشر غير نوعي للالتهاب."},
+{n:"D-Dimer",a:"دي-دايمر",ab:"D-Dimer",c:"hematology",s:"Citrated Plasma",sa:"بلازما سيترات",t:"1-2h",d:"Rules out DVT/PE with high negative predictive value.",da:"يستبعد الجلطات الوريدية والانصمام الرئوي."},
+{n:"Reticulocyte Count",a:"تعداد الخلايا الشبكية",ab:"Retic",c:"hematology",s:"EDTA Blood",sa:"دم EDTA",t:"2-4h",d:"Measures immature RBCs. Assesses bone marrow erythropoietic activity.",da:"يقيس خلايا الدم الحمراء غير الناضجة لتقييم نشاط نقي العظم."},
+{n:"Peripheral Blood Smear",a:"مسحة دم محيطية",ab:"PBS",c:"hematology",s:"EDTA Blood",sa:"دم EDTA",t:"2-4h",d:"Microscopic exam of blood cell morphology for hematological disorders.",da:"فحص مجهري لشكل خلايا الدم لتشخيص الاضطرابات الدموية."},
+{n:"Fibrinogen",a:"الفيبرينوجين",ab:"Fibrinogen",c:"hematology",s:"Citrated Plasma",sa:"بلازما سيترات",t:"2-4h",d:"Coagulation factor. Elevated as acute phase reactant; low in DIC.",da:"عامل تخثر. يرتفع كبروتين طور حاد وينخفض في التخثر المنتشر داخل الأوعية."},
+// CHEMISTRY
+{n:"HbA1c",a:"الهيموغلوبين السكري",ab:"HbA1c",c:"chemistry",s:"EDTA Blood",sa:"دم EDTA",t:"4-6h",d:"Reflects average blood glucose over 2-3 months. Key diabetes marker.",da:"يعكس متوسط السكر خلال 2-3 أشهر."},
+{n:"Liver Function Panel",a:"وظائف الكبد",ab:"LFT",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"ALT, AST, ALP, bilirubin, albumin for liver health evaluation.",da:"إنزيمات الكبد والبيليروبين والألبومين لتقييم صحة الكبد."},
+{n:"Renal Function Panel",a:"وظائف الكلى",ab:"RFT",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Creatinine, BUN, electrolytes, eGFR for kidney function.",da:"الكرياتينين واليوريا والشوارد لتقييم وظائف الكلى."},
+{n:"Lipid Profile",a:"الدهون",ab:"Lipids",c:"chemistry",s:"Serum (Fasting)",sa:"مصل (صائم)",t:"2-4h",d:"Cholesterol, HDL, LDL, triglycerides for cardiovascular risk.",da:"الكوليسترول والدهون الثلاثية لتقييم مخاطر القلب."},
+{n:"Fasting Blood Sugar",a:"السكر الصائم",ab:"FBS",c:"chemistry",s:"Fluoride Blood",sa:"دم فلورايد",t:"1h",d:"Measures fasting glucose for diabetes screening and monitoring.",da:"يقيس الغلوكوز الصائم لفحص ومتابعة السكري."},
+{n:"Random Blood Sugar",a:"السكر العشوائي",ab:"RBS",c:"chemistry",s:"Serum",sa:"مصل",t:"30min",d:"Measures glucose at any time regardless of meals.",da:"يقيس الغلوكوز في أي وقت بغض النظر عن الوجبات."},
+{n:"Urinalysis",a:"تحليل البول",ab:"UA",c:"chemistry",s:"Mid-stream Urine",sa:"بول وسط التبول",t:"1-2h",d:"Physical, chemical, microscopic exam for UTI, kidney disease, diabetes.",da:"فحص شامل للبول للكشف عن أمراض متعددة."},
+{n:"Vitamin D",a:"فيتامين د",ab:"Vit D",c:"chemistry",s:"Serum",sa:"مصل",t:"4-6h",d:"25-hydroxyvitamin D for bone health assessment.",da:"لتقييم صحة العظام."},
+{n:"Ferritin",a:"الفيريتين",ab:"Ferritin",c:"chemistry",s:"Serum",sa:"مصل",t:"4-6h",d:"Iron stores marker. Low = iron deficiency.",da:"مؤشر مخزون الحديد."},
+{n:"Serum Iron & TIBC",a:"حديد المصل وقدرة الارتباط",ab:"Fe/TIBC",c:"chemistry",s:"Serum",sa:"مصل",t:"4-6h",d:"Evaluates iron status and transport capacity. Key in anemia workup.",da:"يقيّم حالة الحديد وقدرة النقل. أساسي في تقييم فقر الدم."},
+{n:"Uric Acid",a:"حمض البول",ab:"Uric Acid",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Elevated in gout, kidney disease, metabolic disorders.",da:"يرتفع في النقرس وأمراض الكلى."},
+{n:"Electrolytes",a:"الشوارد",ab:"Na/K/Cl",c:"chemistry",s:"Serum",sa:"مصل",t:"1-2h",d:"Sodium, potassium, chloride for fluid and acid-base balance.",da:"الصوديوم والبوتاسيوم والكلور لتوازن السوائل."},
+{n:"Calcium & Phosphorus",a:"الكالسيوم والفوسفور",ab:"Ca/PO4",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Bone metabolism and parathyroid function evaluation.",da:"تقييم أيض العظام ووظائف جارات الدرق."},
+{n:"Magnesium",a:"المغنيسيوم",ab:"Mg",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Neuromuscular and cardiac function. Deficiency causes arrhythmias.",da:"مهم للعضلات والأعصاب والقلب."},
+{n:"Cardiac Troponin",a:"تروبونين القلب",ab:"cTnI",c:"chemistry",s:"Serum",sa:"مصل",t:"1h",d:"Gold standard for myocardial infarction diagnosis.",da:"المعيار الذهبي لتشخيص احتشاء عضلة القلب."},
+{n:"CK-MB",a:"إنزيم القلب CK-MB",ab:"CK-MB",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Cardiac enzyme for MI diagnosis and reinfarction detection.",da:"إنزيم قلبي لتشخيص الاحتشاء وكشف إعادة الاحتشاء."},
+{n:"Amylase & Lipase",a:"الأميلاز والليباز",ab:"Amy/Lip",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Pancreatic enzymes. Elevated in acute pancreatitis.",da:"إنزيمات البنكرياس. ترتفع في التهاب البنكرياس الحاد."},
+{n:"LDH",a:"نازعة هيدروجين اللاكتات",ab:"LDH",c:"chemistry",s:"Serum",sa:"مصل",t:"2-4h",d:"Non-specific tissue damage marker. Elevated in hemolysis, MI, malignancy.",da:"مؤشر غير نوعي لتلف الأنسجة."},
+{n:"Arterial Blood Gas",a:"غازات الدم الشريانية",ab:"ABG",c:"chemistry",s:"Arterial Blood",sa:"دم شرياني",t:"30min",d:"pH, pCO2, pO2, HCO3 for acid-base and oxygenation status.",da:"يقيس حالة الأحماض والقواعد والأكسجة."},
+// IMMUNOLOGY
+{n:"C-Reactive Protein",a:"بروتين سي التفاعلي",ab:"CRP",c:"immunology",s:"Serum",sa:"مصل",t:"2-4h",d:"Acute phase reactant. Sensitive inflammation and infection marker.",da:"بروتين الطور الحاد. مؤشر حساس للالتهاب."},
+{n:"ANA",a:"أجسام مضادة للنواة",ab:"ANA",c:"immunology",s:"Serum",sa:"مصل",t:"24-48h",d:"Screens for SLE, scleroderma, Sjögren's syndrome.",da:"يكشف الذئبة والتصلب الجلدي ومتلازمة شوغرن."},
+{n:"PSA",a:"المستضد البروستاتي",ab:"PSA",c:"immunology",s:"Serum",sa:"مصل",t:"4-6h",d:"Tumor marker for prostate cancer screening.",da:"دلالة أورام لسرطان البروستاتا."},
+{n:"Rheumatoid Factor",a:"عامل الروماتويد",ab:"RF",c:"immunology",s:"Serum",sa:"مصل",t:"4-6h",d:"Autoantibody in rheumatoid arthritis.",da:"جسم مضاد ذاتي في التهاب المفاصل الروماتويدي."},
+{n:"Anti-CCP",a:"أجسام مضادة Anti-CCP",ab:"Anti-CCP",c:"immunology",s:"Serum",sa:"مصل",t:"24-48h",d:"Highly specific for RA. Better specificity than RF.",da:"نوعي جداً لالتهاب المفاصل الروماتويدي."},
+{n:"Complement C3/C4",a:"المتممة",ab:"C3/C4",c:"immunology",s:"Serum",sa:"مصل",t:"4-6h",d:"Low in SLE, glomerulonephritis, hereditary angioedema.",da:"تنخفض في الذئبة والتهاب الكبيبات."},
+{n:"Immunoglobulins",a:"الغلوبولينات المناعية",ab:"IgG/A/M",c:"immunology",s:"Serum",sa:"مصل",t:"24-48h",d:"Quantitative measurement for immune deficiency evaluation.",da:"قياس كمي لتقييم نقص المناعة."},
+{n:"AFP (Tumor Marker)",a:"ألفا فيتو بروتين",ab:"AFP",c:"immunology",s:"Serum",sa:"مصل",t:"4-6h",d:"Hepatocellular carcinoma and testicular cancer marker.",da:"دلالة أورام الكبد وسرطان الخصية."},
+{n:"CA-125",a:"دلالة الأورام CA-125",ab:"CA-125",c:"immunology",s:"Serum",sa:"مصل",t:"4-6h",d:"Ovarian cancer marker. Used for monitoring treatment response.",da:"دلالة سرطان المبيض ومتابعة الاستجابة للعلاج."},
+{n:"CEA",a:"المستضد السرطاني الجنيني",ab:"CEA",c:"immunology",s:"Serum",sa:"مصل",t:"4-6h",d:"Colorectal cancer marker. Monitors recurrence post-surgery.",da:"دلالة سرطان القولون والمستقيم."},
+// ENDOCRINE
+{n:"TSH",a:"هرمون الغدة الدرقية",ab:"TSH",c:"endocrine",s:"Serum",sa:"مصل",t:"4-6h",d:"Primary thyroid screening. High=hypothyroid, Low=hyperthyroid.",da:"الفحص الأولي للغدة الدرقية."},
+{n:"Free T4",a:"الثايروكسين الحر",ab:"FT4",c:"endocrine",s:"Serum",sa:"مصل",t:"4-6h",d:"Unbound thyroxine with TSH for thyroid evaluation.",da:"مع TSH لتقييم وظائف الدرقية."},
+{n:"Free T3",a:"ثلاثي يود الثيرونين الحر",ab:"FT3",c:"endocrine",s:"Serum",sa:"مصل",t:"4-6h",d:"Active thyroid hormone. Elevated early in hyperthyroidism.",da:"الهرمون الدرقي النشط. يرتفع مبكراً في فرط الدرقية."},
+{n:"Cortisol",a:"الكورتيزول",ab:"Cortisol",c:"endocrine",s:"Serum (AM/PM)",sa:"مصل (صباح/مساء)",t:"4-6h",d:"Adrenal function evaluation. Cushing's and Addison's diagnosis.",da:"تقييم وظائف الكظر وتشخيص كوشينغ وأديسون."},
+{n:"Insulin",a:"الإنسولين",ab:"Insulin",c:"endocrine",s:"Serum",sa:"مصل",t:"4-6h",d:"Insulin resistance assessment and hypoglycemia workup.",da:"تقييم مقاومة الإنسولين ونقص السكر."},
+{n:"PTH",a:"هرمون جارات الدرق",ab:"PTH",c:"endocrine",s:"Serum",sa:"مصل",t:"4-8h",d:"Calcium regulation. High in hyperparathyroidism, Vit D deficiency.",da:"ينظم الكالسيوم. يرتفع في فرط جارات الدرق."},
+{n:"Prolactin",a:"البرولاكتين",ab:"PRL",c:"endocrine",s:"Serum",sa:"مصل",t:"4-6h",d:"Pituitary adenomas, medication effects, hypothyroidism.",da:"أورام النخامية وتأثيرات الأدوية."},
+{n:"Testosterone",a:"التستوستيرون",ab:"Testosterone",c:"endocrine",s:"Serum",sa:"مصل",t:"4-6h",d:"Male hypogonadism, PCOS in women, adrenal tumors.",da:"قصور الغدد التناسلية وتكيس المبايض."},
+// MICROBIOLOGY
+{n:"Blood Culture",a:"مزرعة الدم",ab:"BC",c:"microbiology",s:"Blood (Aer/Anaer)",sa:"دم (هوائي/لاهوائي)",t:"24-72h",d:"Detects bacteremia/fungemia. Critical for sepsis management.",da:"يكشف تجرثم الدم وفطريات الدم."},
+{n:"Urine Culture",a:"مزرعة البول",ab:"U C/S",c:"microbiology",s:"Mid-stream Urine",sa:"بول",t:"24-48h",d:"UTI gold standard. Identifies uropathogens and susceptibility.",da:"المعيار الذهبي لتشخيص التهاب المسالك البولية."},
+{n:"Stool Culture",a:"مزرعة البراز",ab:"Stool C/S",c:"microbiology",s:"Stool",sa:"براز",t:"48-72h",d:"Salmonella, Shigella, Campylobacter, pathogenic E. coli.",da:"يكشف بكتيريا الإسهال المعدي."},
+{n:"Sputum Culture",a:"مزرعة البلغم",ab:"Sputum C/S",c:"microbiology",s:"Sputum",sa:"بلغم",t:"48-72h",d:"Respiratory pathogens with Gram stain and sensitivity.",da:"مسببات أمراض الجهاز التنفسي."},
+{n:"Wound Culture",a:"مزرعة الجرح",ab:"Wound C/S",c:"microbiology",s:"Wound Swab",sa:"مسحة جرح",t:"48-72h",d:"Wound pathogens including MRSA. Guides antibiotic therapy.",da:"مسببات أمراض الجروح بما فيها MRSA."},
+{n:"Throat Culture",a:"مزرعة الحلق",ab:"Throat C/S",c:"microbiology",s:"Throat Swab",sa:"مسحة حلق",t:"24-48h",d:"Group A Streptococcus and other pharyngeal pathogens.",da:"المكورات العقدية من المجموعة أ ومسببات التهاب البلعوم."},
+{n:"AFB Smear & Culture",a:"صبغة وزراعة AFB",ab:"AFB",c:"microbiology",s:"Sputum/Tissue",sa:"بلغم/نسيج",t:"6-8 wks",d:"Acid-fast bacilli for tuberculosis diagnosis.",da:"العصيات المقاومة للحمض لتشخيص السل."},
+// HISTOPATHOLOGY
+{n:"H&E Stain",a:"صبغة H&E",ab:"H&E",c:"histopathology",s:"FFPE Tissue",sa:"نسيج مثبت",t:"4-24h",d:"Gold standard histological stain. Nuclei=blue, cytoplasm=pink.",da:"الصبغة النسيجية الأساسية."},
+{n:"IHC Panel",a:"الكيمياء النسيجية المناعية",ab:"IHC",c:"histopathology",s:"FFPE Tissue",sa:"نسيج FFPE",t:"24-72h",d:"Antibody-based protein detection for tumor classification and therapy.",da:"كشف البروتينات بالأجسام المضادة لتصنيف الأورام."},
+{n:"PAS Stain",a:"صبغة PAS",ab:"PAS",c:"histopathology",s:"FFPE Tissue",sa:"نسيج مثبت",t:"4-8h",d:"Glycogen, glycoproteins, fungal infections detection.",da:"تكشف الغلايكوجين والعدوى الفطرية."},
+{n:"Pap Smear (ThinPrep)",a:"فحص باب",ab:"Pap",c:"histopathology",s:"Cervical Cells",sa:"خلايا عنق الرحم",t:"24-48h",d:"Cervical cytology for dysplasia and carcinoma screening.",da:"فحص خلايا عنق الرحم للكشف عن السرطان."},
+{n:"Masson's Trichrome",a:"صبغة ماسون",ab:"Trichrome",c:"histopathology",s:"FFPE Tissue",sa:"نسيج مثبت",t:"4-8h",d:"Differentiates collagen from muscle. Evaluates fibrosis.",da:"تفرّق الكولاجين عن العضلات وتقيّم التليف."},
+{n:"Congo Red",a:"كونغو الحمراء",ab:"Congo Red",c:"histopathology",s:"FFPE Tissue",sa:"نسيج مثبت",t:"4-8h",d:"Amyloid detection. Apple-green birefringence under polarized light.",da:"كشف الأميلويد بالانكسار الضوئي."},
+{n:"Reticulin Stain",a:"صبغة الريتيكولين",ab:"Reticulin",c:"histopathology",s:"FFPE Tissue",sa:"نسيج مثبت",t:"4-8h",d:"Evaluates reticulin fiber framework. Used in liver and bone marrow biopsies.",da:"تقيّم إطار ألياف الريتيكولين في خزعات الكبد ونقي العظم."},
+{n:"GMS Stain",a:"صبغة GMS",ab:"GMS",c:"histopathology",s:"FFPE Tissue",sa:"نسيج مثبت",t:"4-8h",d:"Grocott's methenamine silver for fungal organism detection.",da:"صبغة فضية لكشف الكائنات الفطرية."},
+];
+
+const cats=[{id:'all',en:'All',ar:'الكل',icon:''},{id:'hematology',en:'Hematology',ar:'أمراض الدم',icon:'fa-solid fa-droplet',cl:'#ef4444'},{id:'chemistry',en:'Chemistry',ar:'الكيمياء',icon:'fa-solid fa-flask',cl:'#3b82f6'},{id:'immunology',en:'Immunology',ar:'المناعة',icon:'fa-solid fa-shield-virus',cl:'#a855f7'},{id:'endocrine',en:'Endocrine',ar:'الغدد الصماء',icon:'fa-solid fa-syringe',cl:'#f59e0b'},{id:'microbiology',en:'Microbiology',ar:'الأحياء الدقيقة',icon:'fa-solid fa-bacterium',cl:'#22c55e'},{id:'histopathology',en:'Histopathology',ar:'الأنسجة المرضية',icon:'fa-solid fa-microscope',cl:'#ec4899'}];
+let cCat='all';
+const cIcMap={hematology:'fa-solid fa-droplet',chemistry:'fa-solid fa-flask',immunology:'fa-solid fa-shield-virus',microbiology:'fa-solid fa-bacterium',endocrine:'fa-solid fa-syringe',histopathology:'fa-solid fa-microscope'};
+
+function buildCats(){document.getElementById('catF').innerHTML=cats.map(c=>`<button class="cp${c.id===cCat?' on':''}" onclick="fCat('${c.id}',this)">${c.icon?`<i class="${c.icon}" style="color:${c.cl}"></i>`:''} ${L==='ar'?c.ar:c.en}</button>`).join('');}
+
+function renderT(tests){
+const list=document.getElementById('tList'),nr=document.getElementById('noRes'),tc=document.getElementById('tCount');
+list.innerHTML='';tc.textContent=UI[L].tf(tests.length);
+if(!tests.length){nr.classList.add('vis');return;}nr.classList.remove('vis');
+const ar=L==='ar';
+tests.forEach((t,i)=>{const el=document.createElement('div');el.className='ti gl asr';el.style.animationDelay=Math.min(i*.025,.6)+'s';
+el.innerHTML=`<div class="th" onclick="this.parentElement.classList.toggle('open')"><div class="tic ${t.c}"><i class="${cIcMap[t.c]||'fa-solid fa-flask'}"></i></div><div class="tnc"><div class="tn">${ar?t.a:t.n} <span class="tab-code">${t.ab}</span></div><div class="tsp"><i class="fa-solid fa-vial" style="margin-right:4px;font-size:9px"></i>${ar?t.sa:t.s} &bull; TAT: ${t.t}</div></div><i class="fa-solid fa-chevron-down tch"></i></div><div class="td"><div class="tdi"><p class="tdesc">${ar?t.da:t.d}</p><p class="tdescAr">${ar?t.d:t.da}</p><div class="tmeta"><span class="tmp"><i class="fa-solid fa-vial"></i>${ar?t.sa:t.s}</span><span class="tmp"><i class="fa-regular fa-clock"></i>${t.t}</span><span class="tmp" style="text-transform:capitalize"><i class="fa-solid fa-tag"></i>${ar?cats.find(c=>c.id===t.c)?.ar||t.c:t.c}</span></div></div></div>`;
+list.appendChild(el);});
+}
+function filterTests(){const q=document.getElementById('sInp').value.toLowerCase().trim();const cb=document.getElementById('clBtn');q?cb.classList.add('vis'):cb.classList.remove('vis');let f=T;if(cCat!=='all')f=f.filter(t=>t.c===cCat);if(q)f=f.filter(t=>t.n.toLowerCase().includes(q)||t.a.includes(q)||t.ab.toLowerCase().includes(q)||t.s.toLowerCase().includes(q)||t.d.toLowerCase().includes(q)||t.da.includes(q));renderT(f);}
+function clearSearch(){document.getElementById('sInp').value='';document.getElementById('clBtn').classList.remove('vis');filterTests();}
+function fCat(c,btn){cCat=c;document.querySelectorAll('.cp').forEach(p=>p.classList.remove('on'));if(btn)btn.classList.add('on');filterTests();}
+
+// =========== SAFETY MANUAL ===========
+const safetyData=[
+{t:"Personal Protective Equipment (PPE)",ta:"معدات الحماية الشخصية",icon:"fa-solid fa-vest-patches",color:"#dc2626",bg:"#fef2f2",items:[
+"Lab coats must be worn at all times in the laboratory and removed before leaving","Gloves must be changed between specimens and after contact with contaminated surfaces","Eye protection (goggles/face shields) required when splash risk exists","Closed-toe shoes mandatory — no sandals or open footwear","Hair must be tied back to prevent contamination"],
+itemsAr:["يجب ارتداء معاطف المختبر في جميع الأوقات وخلعها قبل المغادرة","تغيير القفازات بين العينات وبعد ملامسة الأسطح الملوثة","حماية العين مطلوبة عند وجود خطر الرذاذ","أحذية مغلقة إلزامية","ربط الشعر لمنع التلوث"]},
+{t:"Chemical Safety & Handling",ta:"السلامة الكيميائية والتعامل مع المواد",icon:"fa-solid fa-flask-vial",color:"#d97706",bg:"#fffbeb",items:[
+"All chemicals must have proper Safety Data Sheets (SDS) readily accessible","Formalin must be used under chemical fume hood (exposure limit: 0.75 ppm TWA)","Never pipette by mouth — use mechanical pipetting devices only","Label all containers with chemical name, concentration, date, and hazard symbol","Store incompatible chemicals separately (acids away from bases, oxidizers from flammables)"],
+itemsAr:["جميع المواد الكيميائية يجب أن تحتوي على صحائف بيانات السلامة SDS","الفورمالين يجب استخدامه تحت شفاط كيميائي","ممنوع السحب بالفم — أجهزة سحب ميكانيكية فقط","تسمية جميع الحاويات بالاسم والتركيز والتاريخ ورمز الخطر","تخزين المواد غير المتوافقة بشكل منفصل"]},
+{t:"Biological Safety & Infection Control",ta:"السلامة البيولوجية ومكافحة العدوى",icon:"fa-solid fa-biohazard",color:"#7c3aed",bg:"#f5f3ff",items:[
+"Treat ALL specimens as potentially infectious (Universal/Standard Precautions)","Use Biosafety Cabinets (BSC Class II) for procedures generating aerosols","Proper hand hygiene: before and after patient contact, before and after glove use","Sharps must be disposed in puncture-resistant containers — NEVER recap needles","Spill kit must be available: absorb with paper towels, disinfect with 10% bleach for 20 min"],
+itemsAr:["تعامل مع جميع العينات كمعدية محتملة (الاحتياطات القياسية)","استخدام خزانات السلامة البيولوجية للإجراءات المولدة للهباء","نظافة اليدين: قبل وبعد التعامل مع العينات","التخلص من الأدوات الحادة في حاويات مقاومة للثقب","أدوات الانسكاب متوفرة: امتصاص وتطهير بمحلول مبيض 10%"]},
+{t:"Fire Safety & Emergency Response",ta:"السلامة من الحرائق والاستجابة للطوارئ",icon:"fa-solid fa-fire-extinguisher",color:"#dc2626",bg:"#fef2f2",items:[
+"Know the location of all fire extinguishers, fire blankets, and emergency exits","RACE protocol: Rescue, Alarm, Contain, Extinguish/Evacuate","Fire extinguisher types: Class ABC for general, Class D for metals, CO2 for electrical","Emergency shower and eyewash stations must be within 10 seconds walking distance","Conduct fire drills at least annually; document all drills and training"],
+itemsAr:["معرفة مواقع طفايات الحريق والبطانيات والمخارج","بروتوكول RACE: إنقاذ، إنذار، احتواء، إطفاء/إخلاء","أنواع الطفايات: ABC عامة، D للمعادن، CO2 للكهربائية","محطات الاستحمام وغسل العين خلال 10 ثوان مشياً","تدريبات الحريق سنوياً على الأقل مع التوثيق"]},
+{t:"Waste Management",ta:"إدارة النفايات",icon:"fa-solid fa-trash-can",color:"#059669",bg:"#ecfdf5",items:[
+"Segregate waste at point of generation: infectious (red), chemical (yellow), general (black)","Autoclave infectious waste at 121°C for 30 min before disposal","Sharps containers must not be filled beyond ¾ capacity","Chemical waste must be collected separately and disposed through licensed contractors","Document all waste disposal: type, quantity, date, method, responsible person"],
+itemsAr:["فصل النفايات عند المصدر: معدية (أحمر)، كيميائية (أصفر)، عامة (أسود)","تعقيم النفايات المعدية بالأوتوكلاف 121°C لمدة 30 دقيقة","حاويات الأدوات الحادة لا تملأ أكثر من ¾","النفايات الكيميائية تجمع منفصلة وتتخلص عبر مقاولين مرخصين","توثيق جميع عمليات التخلص: النوع، الكمية، التاريخ، الطريقة"]},
+{t:"Specimen Handling & Transport",ta:"التعامل مع العينات ونقلها",icon:"fa-solid fa-vials",color:"#0c85f1",bg:"var(--lab-50)",items:[
+"All specimens must be in sealed, leak-proof primary containers","Transport in secondary containers with biohazard labels","Maintain proper temperature during transport (2-8°C for most specimens)","Pneumatic tube systems: specimens must be in sealed bags within carriers","Reject criteria: hemolyzed, lipemic, clotted, mislabeled, insufficient volume"],
+itemsAr:["جميع العينات في حاويات أولية محكمة الإغلاق ومانعة للتسرب","النقل في حاويات ثانوية مع ملصقات الخطر البيولوجي","الحفاظ على درجة الحرارة المناسبة (2-8°C لمعظم العينات)","أنظمة الأنابيب الهوائية: العينات في أكياس محكمة","معايير الرفض: انحلال، شحمية، تخثر، خطأ تعريف، حجم غير كافٍ"]},
+{t:"Electrical & Equipment Safety",ta:"سلامة الأجهزة والكهرباء",icon:"fa-solid fa-plug",color:"#d97706",bg:"#fffbeb",items:[
+"Annual preventive maintenance for all laboratory equipment with documentation","Do not use equipment with damaged cords or plugs","Ground Fault Circuit Interrupters (GFCI) required near water sources","Unplug equipment before maintenance or cleaning","Keep equipment manuals accessible; train all operators before use"],
+itemsAr:["صيانة وقائية سنوية لجميع الأجهزة مع التوثيق","عدم استخدام أجهزة بأسلاك أو مقابس تالفة","قواطع الحماية مطلوبة قرب مصادر المياه","فصل الأجهزة قبل الصيانة أو التنظيف","أدلة الأجهزة متاحة وتدريب المشغلين قبل الاستخدام"]},
+{t:"Ergonomics & Workplace Safety",ta:"بيئة العمل والسلامة المهنية",icon:"fa-solid fa-person-walking",color:"#0891b2",bg:"#ecfeff",items:[
+"Adjust microscope, chair, and bench height to minimize strain","Take regular breaks during prolonged microscopy (every 30-45 minutes)","Use anti-fatigue mats at standing workstations","Proper lifting techniques: bend knees, keep load close to body","Report all workplace injuries and near-misses immediately"],
+itemsAr:["ضبط ارتفاع المجهر والكرسي والطاولة لتقليل الإجهاد","استراحات منتظمة أثناء الفحص المجهري المطول (كل 30-45 دقيقة)","سجادات مضادة للإرهاق في محطات العمل الواقفة","تقنيات الرفع الصحيحة","الإبلاغ عن جميع الإصابات والحوادث القريبة فوراً"]}
+];
+
+function buildSafety(){const w=document.getElementById('safetyContent');const ar=L==='ar';
+w.innerHTML=safetyData.map(s=>`<div class="mcard gl"><div class="mcard-h"><div class="mcard-ic" style="background:${s.bg};color:${s.color}"><i class="${s.icon}"></i></div><div class="mcard-t">${ar?s.ta:s.t}</div></div><ul>${(ar?s.itemsAr:s.items).map(i=>`<li>${i}</li>`).join('')}</ul>${ar?`<div class="mcard-ar" style="direction:ltr;text-align:left;font-family:var(--sans);font-size:11px">${s.t}</div>`:`<div class="mcard-ar">${s.ta}</div>`}</div>`).join('');}
+
+// =========== QC BASICS ===========
+const qcData=[
+{t:"What is Quality Control?",ta:"ما هو ضبط الجودة؟",icon:"fa-solid fa-bullseye",color:"#7c3aed",bg:"#f5f3ff",
+text:"Quality Control (QC) is a systematic process to ensure laboratory test results are reliable, reproducible, and accurate. It involves running control materials alongside patient specimens and monitoring results against established acceptable ranges.",
+textAr:"ضبط الجودة هو عملية منهجية لضمان أن نتائج الفحوصات المخبرية موثوقة وقابلة للتكرار ودقيقة. يتضمن تشغيل مواد ضابطة مع عينات المرضى ومراقبة النتائج."},
+{t:"Internal QC (IQC)",ta:"ضبط الجودة الداخلي",icon:"fa-solid fa-chart-simple",color:"#0c85f1",bg:"var(--lab-50)",items:[
+"Run at least 2 levels of controls daily (normal and abnormal) before reporting patient results","Plot results on Levey-Jennings charts to visualize trends and shifts","Calculate mean (x̄), standard deviation (SD), and coefficient of variation (CV%)","Establish control limits: ±2SD = warning, ±3SD = rejection","Document all QC results, failures, corrective actions, and repeat testing"],
+itemsAr:["تشغيل مستويين على الأقل من المواد الضابطة يومياً","رسم النتائج على مخططات ليفي-جينينغز","حساب المتوسط والانحراف المعياري ومعامل التباين","حدود المراقبة: ±2SD تحذير، ±3SD رفض","توثيق جميع نتائج وإخفاقات وإجراءات تصحيحية"]},
+{t:"Westgard Rules",ta:"قواعد ويستغارد",icon:"fa-solid fa-scale-balanced",color:"#dc2626",bg:"#fef2f2",items:[
+"1-2s: Warning rule — 1 control >±2SD (investigate, don't reject yet)","1-3s: REJECT — 1 control >±3SD (random error; don't report results)","2-2s: REJECT — 2 consecutive controls >±2SD same direction (systematic error)","R-4s: REJECT — Range between 2 controls >4SD (random error)","4-1s: REJECT — 4 consecutive controls >±1SD same direction (shift/trend)","10x: REJECT — 10 consecutive controls on same side of mean (systematic bias)"],
+itemsAr:["1-2s: قاعدة تحذير — ضابط واحد أكثر من ±2SD","1-3s: رفض — ضابط واحد أكثر من ±3SD (خطأ عشوائي)","2-2s: رفض — ضابطان متتاليان أكثر من ±2SD بنفس الاتجاه","R-4s: رفض — المدى بين ضابطين أكثر من 4SD","4-1s: رفض — 4 ضوابط متتالية أكثر من ±1SD بنفس الاتجاه","10x: رفض — 10 ضوابط متتالية على نفس جانب المتوسط"]},
+{t:"Levey-Jennings Chart",ta:"مخطط ليفي-جينينغز",icon:"fa-solid fa-chart-line",color:"#059669",bg:"#ecfdf5",
+text:"A graphical tool plotting QC values over time. The X-axis = time/run number, Y-axis = control values. Mean line in center with ±1SD, ±2SD, ±3SD limits drawn. Trends (6+ consecutive values moving one direction) and shifts (10+ values on one side of mean) indicate systematic problems requiring investigation.",
+textAr:"أداة رسومية ترسم قيم ضبط الجودة عبر الزمن. المحور X = الزمن، المحور Y = القيم الضابطة. خط المتوسط في الوسط مع حدود ±1SD و±2SD و±3SD. الاتجاهات (6+ قيم متتالية بنفس الاتجاه) والانزياحات (10+ قيم على نفس الجانب) تشير لمشاكل منهجية."},
+{t:"External QA (Proficiency Testing)",ta:"ضمان الجودة الخارجي (اختبار الكفاءة)",icon:"fa-solid fa-globe",color:"#d97706",bg:"#fffbeb",items:[
+"Participate in CAP, NEQAS, or equivalent proficiency testing programs","Analyze PT samples using the same procedures as patient specimens","Review PT results promptly and investigate any unacceptable performance","Document corrective actions for failed PT events","Maintain enrollment in PT for all regulated analytes"],
+itemsAr:["المشاركة في برامج CAP أو NEQAS أو ما يعادلها","تحليل عينات الكفاءة بنفس إجراءات عينات المرضى","مراجعة النتائج فوراً والتحقيق في أي أداء غير مقبول","توثيق الإجراءات التصحيحية لإخفاقات الكفاءة","الاستمرار في التسجيل لجميع التحاليل المنظمة"]},
+{t:"Pre-analytical QC",ta:"ضبط الجودة قبل التحليلي",icon:"fa-solid fa-clipboard-list",color:"#ec4899",bg:"#fdf2f8",items:[
+"Verify correct patient identification (2 identifiers minimum)","Ensure proper specimen collection: correct tube, adequate volume, proper anticoagulant","Check specimen labeling: patient name, ID, date/time, collector initials","Monitor transport conditions: temperature, time from collection to testing","Implement specimen rejection criteria and track rejection rates"],
+itemsAr:["التحقق من هوية المريض (معرّفان على الأقل)","جمع العينة الصحيح: الأنبوب الصحيح، الحجم الكافي، مانع التخثر المناسب","التحقق من التسمية: اسم المريض، الرقم، التاريخ/الوقت","مراقبة ظروف النقل: الحرارة والزمن","تطبيق معايير رفض العينات وتتبع معدلات الرفض"]},
+{t:"Post-analytical QC",ta:"ضبط الجودة بعد التحليلي",icon:"fa-solid fa-file-medical",color:"#0891b2",bg:"#ecfeff",items:[
+"Verify results against patient history and clinical context (delta checks)","Implement critical value notification policy and document notification","Review and authorize results before releasing to clinicians","Monitor turnaround time (TAT) and set performance targets","Implement a result amendment/correction procedure with full audit trail"],
+itemsAr:["التحقق من النتائج مقابل تاريخ المريض والسياق السريري","تطبيق سياسة إبلاغ القيم الحرجة مع التوثيق","مراجعة واعتماد النتائج قبل الإصدار","مراقبة زمن الاستجابة TAT وتحديد أهداف الأداء","إجراء تعديل النتائج مع مسار تدقيق كامل"]},
+{t:"Documentation & CAPA",ta:"التوثيق والإجراءات التصحيحية CAPA",icon:"fa-solid fa-file-pen",color:"#7c3aed",bg:"#f5f3ff",items:[
+"Maintain QC logs with: date, time, lot number, expiration, analyst, values, pass/fail","Document all out-of-control events with root cause analysis","Implement CAPA: Corrective Action (fix the problem) + Preventive Action (prevent recurrence)","Retain QC records for minimum 2 years (or per accreditation requirements)","Regular QC review meetings (monthly minimum) with documented minutes"],
+itemsAr:["سجلات ضبط الجودة: التاريخ، الوقت، رقم الدفعة، الانتهاء، المحلل، القيم","توثيق جميع أحداث الخروج عن السيطرة مع تحليل السبب الجذري","تطبيق CAPA: إجراء تصحيحي + إجراء وقائي","حفظ السجلات لمدة سنتين على الأقل","اجتماعات مراجعة شهرية موثقة"]}
+];
+
+function buildQC(){const w=document.getElementById('qcContent');const ar=L==='ar';
+w.innerHTML=qcData.map(s=>{
+let body='';
+if(s.text)body=`<p class="mcard-p" style="font-size:12px;color:var(--text);line-height:1.7">${ar?s.textAr:s.text}</p><div class="mcard-ar">${ar?s.text:s.textAr}</div>`;
+if(s.items)body=`<ul>${(ar?s.itemsAr:s.items).map(i=>`<li>${i}</li>`).join('')}</ul>${ar?`<div class="mcard-ar" style="direction:ltr;text-align:left;font-family:var(--sans);font-size:11px">${s.t}</div>`:`<div class="mcard-ar">${s.ta}</div>`}`;
+return `<div class="mcard gl"><div class="mcard-h"><div class="mcard-ic" style="background:${s.bg};color:${s.color}"><i class="${s.icon}"></i></div><div class="mcard-t">${ar?s.ta:s.t}</div></div>${body}</div>`;
+}).join('');}
+
+// =========== INIT ===========
+document.addEventListener('DOMContentLoaded',()=>{
+buildNav();buildTabs();buildTicker();renderNews(currentNews);buildCats();renderT(T);buildSafety();buildQC();
+document.getElementById('tStat').textContent=T.length+'+';
+});
+document.querySelectorAll('a[href^="#"]')
